@@ -162,12 +162,36 @@ namespace XmlSourceGenerator.Generators
             _sb.AppendLine("}");
         }
 
+        private static bool IsSimpleKind(PropertyKind? kind)
+        {
+            return kind == PropertyKind.Primitive || kind == PropertyKind.DateTime || kind == PropertyKind.Enum;
+        }
+
         private void GeneratePolymorphicListWrite(GeneratorPropertyModel info)
         {
+            bool allSimple = info.PolymorphicMappings.All(m => IsSimpleKind(m.TargetTypeInfo?.Kind));
+
+            if (allSimple)
+            {
+                // No polymorphism for simple types - delegate to collection generator
+                new XmlCollectionGenerator(_sb).GenerateCollectionWrite(info);
+                return;
+            }
+
+            // Polymorphic dispatch needed for complex types
             _sb.AppendLine($"if ({info.Name} != null)");
             _sb.AppendLine("{");
             using (_sb.Indent())
             {
+                string parentVar = "element";
+                bool isWrapped = info.ArrayElementName != null;
+                if (isWrapped)
+                {
+                    _sb.AppendLine($"var container = new XElement(\"{info.ArrayElementName}\");");
+                    _sb.AppendLine("element.Add(container);");
+                    parentVar = "container";
+                }
+
                 _sb.AppendLine($"foreach (var item in {info.Name})");
                 _sb.AppendLine("{");
                 using (_sb.Indent())
@@ -184,17 +208,20 @@ namespace XmlSourceGenerator.Generators
                             _sb.AppendLine("{");
                             using (_sb.Indent())
                             {
-                                // Validated IXmlStreamable or fallback
-                                if (mapping.ImplementsIXmlStreamable)
+                                if (IsSimpleKind(mapping.TargetTypeInfo?.Kind))
+                                {
+                                    _sb.AppendLine($"{parentVar}.Add(new XElement(\"{mapping.XmlName}\", {varName}));");
+                                }
+                                else if (mapping.ImplementsIXmlStreamable)
                                 {
                                     _sb.AppendLine($"var child = ((IXmlStreamable){varName}).WriteToXml(options);");
                                     _sb.AppendLine($"child.Name = \"{mapping.XmlName}\";");
-                                    _sb.AppendLine("element.Add(child);");
+                                    _sb.AppendLine($"{parentVar}.Add(child);");
                                 }
                                 else
                                 {
                                     _sb.AppendLine($"var child = ReflectionHelper.Serialize({varName}, options, \"{mapping.XmlName}\");");
-                                    _sb.AppendLine("if (child != null) element.Add(child);");
+                                    _sb.AppendLine($"if (child != null) {parentVar}.Add(child);");
                                 }
                                 _sb.AppendLine("break;");
                             }

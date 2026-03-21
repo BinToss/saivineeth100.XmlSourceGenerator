@@ -368,7 +368,7 @@ namespace XmlSourceGenerator.Generators
                     _sb.AppendLine("{");
                     using (_sb.Indent())
                     {
-                        // Check for polymorphic overrides
+                        // Check for polymorphic overrides (runtime takes precedence if enabled)
                         _sb.AppendLine($"var polyMappings_{propName} = options?.GetPolymorphicMappings(typeof({className}), \"{propName}\");");
                         _sb.AppendLine($"if (options != null && options.PreferOptionsOverAttributes && polyMappings_{propName} != null)");
                         _sb.AppendLine("{");
@@ -409,9 +409,7 @@ namespace XmlSourceGenerator.Generators
                                 _sb.AppendLine("}");
                             }
                             _sb.AppendLine("}");
-                            // If no mapping matched, fall back? Or do nothing? 
-                            // For now, if no mapping matches, we might want to fall back to standard behavior or just not serialize?
-                            // Let's fall back to standard behavior if not matched
+                            // If no mapping matched, fall back to standard behavior
                             _sb.AppendLine($"if (!matched_{propName})");
                             _sb.AppendLine("{");
                             using (_sb.Indent())
@@ -421,13 +419,73 @@ namespace XmlSourceGenerator.Generators
                             _sb.AppendLine("}");
                         }
                         _sb.AppendLine("}");
-                        _sb.AppendLine("else");
-                        _sb.AppendLine("{");
-                        using (_sb.Indent())
+                        
+                        // Check for compile-time polymorphic mappings (from [XmlInclude] on property type)
+                        if (info.IsPolymorphic && info.PolymorphicMappings.Count > 0)
                         {
-                            GenerateStandardComplexWrite(propName, xmlNameVar, ns, info);
+                            _sb.AppendLine("else");
+                            _sb.AppendLine("{");
+                            using (_sb.Indent())
+                            {
+                                // Generate switch on type
+                                _sb.AppendLine($"switch ({propName})");
+                                _sb.AppendLine("{");
+                                using (_sb.Indent())
+                                {
+                                    int index = 0;
+                                    foreach (var mapping in info.PolymorphicMappings)
+                                    {
+                                        string varName = $"typedItem_{propName}_{index}";
+                                        _sb.AppendLine($"case {mapping.TargetTypeName} {varName}:");
+                                        _sb.AppendLine("{");
+                                        using (_sb.Indent())
+                                        {
+                                            if (mapping.ImplementsIXmlStreamable)
+                                            {
+                                                _sb.AppendLine($"var child_{propName} = ((IXmlStreamable){varName}).WriteToXml(options);");
+                                            }
+                                            else
+                                            {
+                                                _sb.AppendLine($"var child_{propName} = ReflectionHelper.Serialize({varName}, options, \"{mapping.XmlName}\");");
+                                            }
+                                            if (ns != null)
+                                            {
+                                                _sb.AppendLine($"if (child_{propName} != null) child_{propName}.Name = ns_{propName} + \"{mapping.XmlName}\";");
+                                            }
+                                            else
+                                            {
+                                                _sb.AppendLine($"if (child_{propName} != null) child_{propName}.Name = \"{mapping.XmlName}\";");
+                                            }
+                                            _sb.AppendLine($"if (child_{propName} != null) element.Add(child_{propName});");
+                                            _sb.AppendLine("break;");
+                                        }
+                                        _sb.AppendLine("}");
+                                        index++;
+                                    }
+                                    // Default case: fall back to standard write
+                                    _sb.AppendLine("default:");
+                                    _sb.AppendLine("{");
+                                    using (_sb.Indent())
+                                    {
+                                        GenerateStandardComplexWrite(propName, xmlNameVar, ns, info);
+                                        _sb.AppendLine("break;");
+                                    }
+                                    _sb.AppendLine("}");
+                                }
+                                _sb.AppendLine("}");
+                            }
+                            _sb.AppendLine("}");
                         }
-                        _sb.AppendLine("}");
+                        else
+                        {
+                            _sb.AppendLine("else");
+                            _sb.AppendLine("{");
+                            using (_sb.Indent())
+                            {
+                                GenerateStandardComplexWrite(propName, xmlNameVar, ns, info);
+                            }
+                            _sb.AppendLine("}");
+                        }
                     }
                     _sb.AppendLine("}");
                 }
