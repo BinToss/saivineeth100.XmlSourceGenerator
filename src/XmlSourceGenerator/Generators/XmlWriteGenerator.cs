@@ -55,6 +55,7 @@ namespace XmlSourceGenerator.Generators
             _sb.AppendLine($"[global::System.ComponentModel.Browsable(false)]");
             _sb.AppendLine($"[global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]");
             _sb.AppendLine($"[global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]");
+            _sb.AppendLine($"[global::System.Text.Json.Serialization.JsonIgnore]");
             _sb.AppendLine($"public {newModifier}string DefaultXmlRootElementName => \"{rootName}\";");
 
             string? rootNs = XmlNamespaceHelper.GetNamespace(classSymbol);
