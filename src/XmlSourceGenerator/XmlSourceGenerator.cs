@@ -1,7 +1,5 @@
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -54,7 +52,7 @@ namespace XmlSourceGenerator
         {
             var classDeclaration = (ClassDeclarationSyntax)context.Node;
             var classSymbol = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
-            
+
             if (classSymbol == null)
                 return null;
 
@@ -82,7 +80,7 @@ namespace XmlSourceGenerator
 
                 string source = GenerateClass(classSymbol, compilation);
                 string hintName = classSymbol.ToDisplayString().Replace(".", "_").Replace(":", "_").Replace("<", "_").Replace(">", "_");
-                context.AddSource($"{hintName}{Constants.GeneratedFileSuffix}", 
+                context.AddSource($"{hintName}{Constants.GeneratedFileSuffix}",
                     SourceText.From(source, Encoding.UTF8));
             }
         }
@@ -90,9 +88,9 @@ namespace XmlSourceGenerator
         private static string GenerateClass(INamedTypeSymbol classSymbol, Compilation compilation)
         {
             var sb = new IndentedStringBuilder();
-            
+
             string namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
-            
+
             sb.AppendLine(Header);
             sb.AppendLine();
             if (SupportsNullable(compilation))
@@ -106,7 +104,7 @@ namespace XmlSourceGenerator
             sb.AppendLine();
             sb.AppendLine($"namespace {namespaceName}");
             sb.AppendLine("{");
-            
+
             using (sb.Indent())
             {
                 var parents = new Stack<INamedTypeSymbol>();
@@ -126,7 +124,7 @@ namespace XmlSourceGenerator
 
                 sb.AppendLine($"public partial class {classSymbol.Name} : {Constants.IXmlStreamableInterfaceName}");
                 sb.AppendLine("{");
-                
+
                 using (sb.Indent())
                 {
                     // Generate nested XmlTypeInfo class
@@ -135,28 +133,28 @@ namespace XmlSourceGenerator
                     using (sb.Indent())
                     {
                         sb.AppendLine($"public static readonly Type Type = typeof({classSymbol.ToDisplayString()});");
-                        
+
                         var members = PropertyHelpers.GetAllMembers(classSymbol);
                         var uniqueNamespaces = new System.Collections.Generic.HashSet<string>();
-                        
+
                         // Check root namespace
                         string? rootNs = XmlNamespaceHelper.GetNamespace(classSymbol);
                         if (rootNs != null)
                         {
                             uniqueNamespaces.Add(rootNs);
                         }
-                        
+
                         // Single loop: generate constants and collect namespaces
                         foreach (var member in members)
                         {
                             if (member.IsStatic) continue;
-                            
+
                             // Generate PropName constant
                             sb.AppendLine($"public const string {Constants.PropNamePrefix}{member.Name} = nameof({classSymbol.ToDisplayString()}.{member.Name});");
-                            
+
                             // Generate DefaultXmlName constant
                             sb.AppendLine($"public const string {Constants.DefaultXmlNamePrefix}{member.Name} = \"{member.Name}\";");
-                            
+
                             // Collect property namespace
                             string? propNs = XmlNamespaceHelper.GetNamespace(member);
                             if (propNs != null)
@@ -164,7 +162,7 @@ namespace XmlSourceGenerator
                                 uniqueNamespaces.Add(propNs);
                             }
                         }
-                        
+
                         // Generate namespace fields
                         int nsIndex = 0;
                         var namespaceMap = new System.Collections.Generic.Dictionary<string, string>();
