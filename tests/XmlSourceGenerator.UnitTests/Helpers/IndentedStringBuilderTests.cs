@@ -41,7 +41,9 @@ public class IndentedStringBuilderTests
             sb.AppendLine("Level 1 Again");
         }
 
-        var expected = "    Level 1\r\n        Level 2\r\n    Level 1 Again\r\n";
+        string expected = System.Environment.NewLine is "\r\n"
+            ? "    Level 1\r\n        Level 2\r\n    Level 1 Again\r\n"
+            : "    Level 1\n        Level 2\n    Level 1 Again\n";
         sb.ToString().Should().Be(expected);
     }
 
