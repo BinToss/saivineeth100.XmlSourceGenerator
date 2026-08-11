@@ -1,5 +1,3 @@
-using FluentAssertions;
-
 namespace XmlSourceGenerator.UnitTests.Helpers;
 
 public class IndentedStringBuilderTests
@@ -58,20 +56,20 @@ public class IndentedStringBuilderTests
     [Fact]
     public void Append_RespectsIndentationForNewLines()
     {
-        // Note: Append usually doesn't indent unless it's start of line, 
+        // Note: Append usually doesn't indent unless it's start of line,
         // but IndentedStringBuilder implementation might vary.
         // Let's check the implementation if needed, but standard behavior is:
-        
+
         var sb = new IndentedStringBuilder();
         using (sb.Indent())
         {
             sb.Append("Hello");
         }
-        
-        // Assuming Append doesn't automatically indent if it's just raw text, 
+
+        // Assuming Append doesn't automatically indent if it's just raw text,
         // OR it indents if it's the start of a line.
         // Let's verify behavior with a simpler test first.
-        
+
         sb.ToString().Should().Be("    Hello");
     }
 }
