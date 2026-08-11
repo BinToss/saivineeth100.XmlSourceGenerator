@@ -9,7 +9,7 @@ public class IndentedStringBuilderTests
     {
         var sb = new IndentedStringBuilder();
         sb.AppendLine("Hello");
-        sb.ToString().Should().Be("Hello\r\n");
+        sb.ToString().Should().Be("Hello" + System.Environment.NewLine);
     }
 
     [Fact]
