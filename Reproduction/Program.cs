@@ -14,6 +14,8 @@ namespace Reproduction
     {
         public int Value { get; set; }
         public string Text { get; set; }
+        public byte Byte { get; set; }
+        public sbyte SByte { get; set; }
     }
 
     public static class Program
@@ -22,7 +24,7 @@ namespace Reproduction
         {
             try
             {
-                var items = new[] { new SimpleItem { Value = 7, Text = null } };
+                var items = new[] { new SimpleItem { Value = 7, Text = null, Byte = 255, SByte = -127 } };
                 using var stream = new MemoryStream();
 
                 Console.WriteLine("Writing to stream...");
