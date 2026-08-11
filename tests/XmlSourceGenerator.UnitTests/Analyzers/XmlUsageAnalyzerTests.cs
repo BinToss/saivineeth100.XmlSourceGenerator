@@ -1,8 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Testing;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
-using Xunit;
 using XmlSourceGenerator.Analyzers;
 
 namespace XmlSourceGenerator.UnitTests.Analyzers
@@ -115,7 +112,7 @@ public partial class TestClass
 
         public static async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
         {
-            var test = new CSharpAnalyzerTest<XmlUsageAnalyzer, XUnitVerifier>
+            var test = new CSharpAnalyzerTest<XmlUsageAnalyzer, DefaultVerifier>
             {
                 TestCode = source,
                 ReferenceAssemblies = ReferenceAssemblies.Net.Net60 // Use .NET 6 reference assemblies
