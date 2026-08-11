@@ -23,7 +23,9 @@ public class IndentedStringBuilderTests
         }
         sb.AppendLine("End");
 
-        var expected = "Start\r\n    Indented\r\nEnd\r\n";
+        var expected = System.Environment.NewLine is "\r\n"
+            ? "Start\r\n    Indented\r\nEnd\r\n"
+            : "Start\n    Indented\nEnd\n";
         sb.ToString().Should().Be(expected);
     }
 
