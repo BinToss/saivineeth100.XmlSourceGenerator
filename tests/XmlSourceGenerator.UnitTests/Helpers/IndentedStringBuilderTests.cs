@@ -4,12 +4,13 @@ namespace XmlSourceGenerator.UnitTests.Helpers;
 
 public class IndentedStringBuilderTests
 {
+    private static string NewLine => System.Environment.NewLine;
     [Fact]
     public void AppendLine_AppendsTextWithNewline()
     {
         var sb = new IndentedStringBuilder();
         sb.AppendLine("Hello");
-        sb.ToString().Should().Be("Hello" + System.Environment.NewLine);
+        sb.ToString().Should().Be("Hello" + NewLine);
     }
 
     [Fact]
@@ -23,9 +24,7 @@ public class IndentedStringBuilderTests
         }
         sb.AppendLine("End");
 
-        var expected = System.Environment.NewLine is "\r\n"
-            ? "Start\r\n    Indented\r\nEnd\r\n"
-            : "Start\n    Indented\nEnd\n";
+        var expected = $"Start{NewLine}    Indented{NewLine}End{NewLine}";
         sb.ToString().Should().Be(expected);
     }
 
@@ -43,9 +42,7 @@ public class IndentedStringBuilderTests
             sb.AppendLine("Level 1 Again");
         }
 
-        string expected = System.Environment.NewLine is "\r\n"
-            ? "    Level 1\r\n        Level 2\r\n    Level 1 Again\r\n"
-            : "    Level 1\n        Level 2\n    Level 1 Again\n";
+        string expected = $"    Level 1{NewLine}        Level 2{NewLine}    Level 1 Again{NewLine}";
         sb.ToString().Should().Be(expected);
     }
 
