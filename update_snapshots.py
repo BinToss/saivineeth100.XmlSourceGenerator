@@ -76,7 +76,7 @@ def update_snapshots():
         # Regex for test file replacement
         # We want to replace the content inside var expectedCode = @"...";
         
-        pattern = re.compile(f'public void {method_name}\(\).*?var expectedCode = @"(.*?)"', re.DOTALL)
+        pattern = re.compile(f'public void {method_name}\\(\\).*?var expectedCode = @"(.*?)"', re.DOTALL)
         
         # Check if method exists in file
         if method_name not in test_content:
