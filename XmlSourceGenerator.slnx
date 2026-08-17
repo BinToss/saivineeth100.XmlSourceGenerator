@@ -8,4 +8,5 @@
     <Project Path="tests/XmlSourceGenerator.Tests/XmlSourceGenerator.Tests.csproj" />
     <Project Path="tests/XmlSourceGenerator.UnitTests/XmlSourceGenerator.UnitTests.csproj" />
   </Folder>
+  <Project Path="Reproduction/Reproduction.csproj" />
 </Solution>
