@@ -129,25 +129,6 @@ namespace XmlSourceGenerator.Tests.Integration
         [Fact]
         public void TestReadAttributes()
         {
-            var xml = new XElement("CustomUser",
-                new XAttribute("id", "202"),
-                new XElement("FullName", "Bob"),
-                new XElement("InternalData", "ShouldBeIgnored"), // Should be ignored
-                new XElement("BirthDate", "1985-10-15"),
-                new XElement("LoginTime", "09:15:00"),
-                new XElement("Status", "Inactive"),
-                new XElement("Tags",
-                    new XElement("Tag", "user"),
-                    new XElement("Tag", "guest")
-                ),
-                new XElement("Role", "Viewer"),
-                new XElement("Role", "Editor"),
-                new XElement("Scores",
-                    new XElement("int", "10"), // Implicit item name for primitives? Generator uses type name usually?
-                    new XElement("int", "20")
-                )
-            );
-
             // Wait, for implicit list items of primitives, what does the generator produce?
             // In GenerateCollectionWrite:
             // if (IsPrimitive(itemType)) sb.AppendLine($"{parentVar}.Add(new XElement(\"{itemXmlName}\", item));");
@@ -175,7 +156,10 @@ namespace XmlSourceGenerator.Tests.Integration
                 new XElement("Role", "Editor"),
                 new XElement(nameof(AttributeUser.Scores),
                     new XElement("Int32", "10"),
-                    new XElement("Int32", "20")
+                    new XElement("Int32", "20"),
+                    // also test `int` elements to ensure type keywords deserialize properly.
+                    new XElement("int", "30"),
+                    new XElement("int", "40")
                 )
             );
 
@@ -194,8 +178,10 @@ namespace XmlSourceGenerator.Tests.Integration
             Assert.Equal(2, user.Roles.Count);
             Assert.Equal("Viewer", user.Roles[0]);
 
-            Assert.Equal(2, user.Scores.Count);
+            Assert.NotNull(user.Scores);
+            Assert.Equal(4, user.Scores.Count);
             Assert.Equal(10, user.Scores[0]);
+            Assert.Equal(40, user.Scores[3]);
         }
     }
 }
