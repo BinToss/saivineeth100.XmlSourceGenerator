@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -166,7 +167,7 @@ namespace XmlSourceGenerator.Abstractions
         // ---------------------------------------------------------
         // GENERIC WRITE: IEnumerable<T> -> Stream
         // ---------------------------------------------------------
-        public static async Task WriteDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)
+        public static async Task WriteEnumerableDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)
         {
             string targetItemName = GetRootName<T>(itemName);
 
@@ -197,9 +198,22 @@ namespace XmlSourceGenerator.Abstractions
             }
         }
 
+
+        /// <summary>
+        /// Serialize the non-enumerable <paramref name="item"/> to the given <paramref name="stream"/>.
+        /// </summary>
+        /// <typeparam name="T">Any non-enumerable type</typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="item"/> implements <see cref="IEnumerable"/>.
+        /// This method would serialize the enumerable's metadata rather than its items.
+        /// </exception>
+        /// <remarks>For types that implement <see cref="IEnumerable"/>, use <see cref="WriteEnumerableDataToStreamAsync{T}(Stream, IEnumerable{T}, XmlSerializationOptions?, string, string?)"/>.</remarks>
         public static async Task WriteDataToStreamAsync<T>(Stream stream, T item, XmlSerializationOptions? options = null, string? rootName = null, string? itemName = null)
         {
-            string actualRootName = rootName ?? itemName;
+            if (item is IEnumerable)
+                throw new ArgumentException($"Type of argument {nameof(item)} ({typeof(T).FullName}) implements {nameof(IEnumerable)}. Use {nameof(WriteEnumerableDataToStreamAsync)}.");
+            string? actualRootName = rootName ?? itemName;
 
             var settings = new XmlWriterSettings
             {

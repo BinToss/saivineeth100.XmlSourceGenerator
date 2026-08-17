@@ -79,7 +79,7 @@ namespace XmlSourceGenerator.Tests.Integration
             };
 
             await using var stream = new MemoryStream();
-            await GenericXmlStreamer.WriteDataToStreamAsync(stream, users);
+            await GenericXmlStreamer.WriteEnumerableDataToStreamAsync(stream, users);
             // Test Written XML
             string xml = System.Text.Encoding.UTF8.GetString(stream.ToArray());
             Assert.Contains("﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><ArrayOfItems><ManualUser><UserId>1</UserId><Username>user1</Username></ManualUser><ManualUser><UserId>2</UserId><Username>user2</Username></ManualUser></ArrayOfItems>", xml);

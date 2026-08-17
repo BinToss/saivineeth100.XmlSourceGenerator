@@ -116,15 +116,15 @@ namespace XmlSourceGenerator.Tests.Unit
 
         #endregion
 
-        #region WriteDataToStreamAsync Tests
+        #region WriteEnumerableDataToStreamAsync Tests
 
         [Fact]
-        public async void WriteDataToStreamAsync_EmptyCollection_WritesEmptyRoot()
+        public async void WriteEnumerableDataToStreamAsync_EmptyCollection_WritesEmptyRoot()
         {
             List<StreamableItem> items = [];
             await using MemoryStream stream = new();
 
-            await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, rootName: "TestRoot");
+            await GenericXmlStreamer.WriteEnumerableDataToStreamAsync(stream, items, rootName: "TestRoot");
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
@@ -134,12 +134,12 @@ namespace XmlSourceGenerator.Tests.Unit
         }
 
         [Fact]
-        public async void WriteDataToStreamAsync_CustomRootName_UsesCustomName()
+        public async void WriteEnumerableDataToStreamAsync_CustomRootName_UsesCustomName()
         {
             var items = new[] { new StreamableItem { Id = 1, Name = "Test" } };
             using var stream = new MemoryStream();
 
-            await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, rootName: "CustomRoot");
+            await GenericXmlStreamer.WriteEnumerableDataToStreamAsync(stream, items, rootName: "CustomRoot");
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
@@ -147,12 +147,12 @@ namespace XmlSourceGenerator.Tests.Unit
         }
 
         [Fact]
-        public async void WriteDataToStreamAsync_NonIXmlStreamable_UsesReflection()
+        public async void WriteEnumerableDataToStreamAsync_NonIXmlStreamable_UsesReflection()
         {
             var items = new[] { new SimpleItem { Value = 10, Text = "World" } };
             await using var stream = new MemoryStream();
 
-            await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, itemName: nameof(SimpleItem));
+            await GenericXmlStreamer.WriteEnumerableDataToStreamAsync(stream, items, itemName: nameof(SimpleItem));
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
