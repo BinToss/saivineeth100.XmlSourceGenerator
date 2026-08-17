@@ -77,12 +77,12 @@ namespace XmlSourceGenerator.Tests.Integration
         [Fact]
         public void TestManualImplementation_WithStreamer()
         {
-            var users = new[] 
-            { 
+            var users = new[]
+            {
                 new ManualUser { UserId = 1, Username = "user1" },
                 new ManualUser { UserId = 2, Username = "user2" }
             };
-           
+
             using var stream = new MemoryStream();
             GenericXmlStreamer.WriteDataToStreamAsync(stream, users).Wait();
             // Test Writtten XML

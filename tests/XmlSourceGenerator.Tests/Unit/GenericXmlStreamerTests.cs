@@ -253,9 +253,9 @@ namespace XmlSourceGenerator.Tests.Unit
                             <GROUP><Id>2</Id><Name>G2</Name></GROUP>
                         </ENVELOPE>";
             using var reader = new StringReader(xml);
-            
+
             var path = new[] { "ENVELOPE" };
-            
+
             var items = GenericXmlStreamer.ReadNestedListDataFromTextReader<StreamableItem>(reader, path, itemName: "GROUP").ToList();
 
             Assert.Equal(2, items.Count);

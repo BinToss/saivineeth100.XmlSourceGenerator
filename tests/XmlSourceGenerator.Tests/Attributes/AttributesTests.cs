@@ -158,9 +158,9 @@ namespace XmlSourceGenerator.Tests.Integration
             // My generator uses itemType.Name. For int, it's Int32.
             // Let's adjust the test XML to match "Int32" for now, or verify what Roslyn gives for Name.
             // Roslyn "Int32" -> "Int32".
-            
+
             // Let's update the test XML to use "Int32" for Scores items.
-            
+
             var xml2 = new XElement("CustomUser",
                 new XAttribute("id", "202"),
                 new XElement("FullName", "Bob"),
@@ -187,13 +187,13 @@ namespace XmlSourceGenerator.Tests.Integration
             Assert.Null(user.InternalData); // Should remain null
             Assert.Equal(new DateTime(1985, 10, 15), user.BirthDate);
             Assert.Equal(UserStatus.Inactive, user.Status);
-            
+
             Assert.Equal(2, user.Tags.Count);
             Assert.Equal("user", user.Tags[0]);
-            
+
             Assert.Equal(2, user.Roles.Count);
             Assert.Equal("Viewer", user.Roles[0]);
-            
+
             Assert.Equal(2, user.Scores.Count);
             Assert.Equal(10, user.Scores[0]);
         }

@@ -74,12 +74,12 @@ namespace XmlSourceGenerator.Tests.Integration
         public void TestWriteIndented()
         {
             var product = new Product { ProductId = 1, ProductName = "Test" };
-            
+
             var options = new XmlSerializationOptions { WriteIndented = true };
 
             using var stream = new MemoryStream();
             GenericXmlStreamer.WriteDataToStreamAsync(stream, new[] { product }, options).Wait();
-            
+
             stream.Position = 0;
             var text = new StreamReader(stream).ReadToEnd();
 
@@ -91,12 +91,12 @@ namespace XmlSourceGenerator.Tests.Integration
         public void TestWriteMinified()
         {
             var product = new Product { ProductId = 1, ProductName = "Test" };
-            
+
             var options = new XmlSerializationOptions { WriteIndented = false };
 
             using var stream = new MemoryStream();
             GenericXmlStreamer.WriteDataToStreamAsync(stream, new[] { product }, options).Wait();
-            
+
             stream.Position = 0;
             var text = new StreamReader(stream).ReadToEnd();
 

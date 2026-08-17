@@ -63,25 +63,25 @@ namespace XmlSourceGenerator.Abstractions
                             break;
                         }
                     }
-                    if (!found) break; 
+                    if (!found) break;
                 }
 
                 if (found)
                 {
                     // If we found the container, read the list inside it
                     // We need to move inside the container
-                    // Currently reader is at <Objects>. 
+                    // Currently reader is at <Objects>.
                     // ReadListDataFromReader expects to find <T> elements.
                     // It will call MoveToContent() which stays on <Objects> if it's content? No.
                     // ReadListDataFromReader loop calls reader.Read() if Name != targetName.
                     // So if we pass the reader positioned at <Objects>, it will read next and find <T>.
-                    
+
                     // Use ReadSubtree to limit scope to the container
                     using (var subReader = reader.ReadSubtree())
                     {
                         // subReader is at <Objects> (Initial)
                         subReader.Read(); // Move to <Objects> element
-                        
+
                         foreach (var item in ReadListDataFromReader<T>(subReader, options, itemName))
                         {
                             yield return item;
@@ -112,15 +112,15 @@ namespace XmlSourceGenerator.Abstractions
                     }
                     catch
                     {
-                       if (options?.IgnoreParsingErrors == true)
-                       {
-                           // Skip item
-                           item = default;
-                           // Ensure reader advances if ParseItem failed?
-                           // If XElement.Load failed, we might be in trouble.
-                           // But if conversion failed, reader is safely at EndElement.
-                       }
-                       else throw;
+                        if (options?.IgnoreParsingErrors == true)
+                        {
+                            // Skip item
+                            item = default;
+                            // Ensure reader advances if ParseItem failed?
+                            // If XElement.Load failed, we might be in trouble.
+                            // But if conversion failed, reader is safely at EndElement.
+                        }
+                        else throw;
                     }
 
                     if (item != null) yield return item;
@@ -171,9 +171,9 @@ namespace XmlSourceGenerator.Abstractions
         {
             string targetItemName = GetRootName<T>(itemName);
 
-            var settings = new XmlWriterSettings 
-            { 
-                Async = true, 
+            var settings = new XmlWriterSettings
+            {
+                Async = true,
                 Indent = options?.WriteIndented ?? false,
                 Encoding = options?.Encoding ?? System.Text.Encoding.UTF8,
                 CloseOutput = false
@@ -182,7 +182,7 @@ namespace XmlSourceGenerator.Abstractions
             using (var writer = XmlWriter.Create(stream, settings))
             {
                 await writer.WriteStartDocumentAsync();
-                
+
                 // If rootName is null (e.g. single item write which handles its own root), handle it?
                 // WriteDataToStreamAsync(IEnumerable) implies a root container.
                 await writer.WriteStartElementAsync(null, rootName, null);
@@ -213,7 +213,7 @@ namespace XmlSourceGenerator.Abstractions
             using (var writer = XmlWriter.Create(stream, settings))
             {
                 await writer.WriteStartDocumentAsync();
-                
+
                 WriteItem(writer, item, actualRootName, options);
 
                 await writer.WriteEndDocumentAsync();
@@ -224,7 +224,6 @@ namespace XmlSourceGenerator.Abstractions
         // ---------------------------------------------------------
         // REFLECTION HELPERS (The "Dynamic" Part)
         // ---------------------------------------------------------
-        
 
 
         private static T ParseItem<T>(XmlReader reader, XmlSerializationOptions? options) where T : new()
@@ -249,19 +248,19 @@ namespace XmlSourceGenerator.Abstractions
 
         private static void WriteItem<T>(XmlWriter writer, T item, string? itemName, XmlSerializationOptions? options)
         {
-             if (item == null) return;
-             XElement el;
-             if (item is IXmlStreamable streamable)
-             {
-                 el = streamable.WriteToXml(options);
-                 if (!string.IsNullOrEmpty(itemName) && el.Name != itemName) el.Name = itemName; 
-             }
-             else
-             {
-                 el = MapToXElement(item, itemName ?? item.GetType().Name);
-             }
+            if (item == null) return;
+            XElement el;
+            if (item is IXmlStreamable streamable)
+            {
+                el = streamable.WriteToXml(options);
+                if (!string.IsNullOrEmpty(itemName) && el.Name != itemName) el.Name = itemName;
+            }
+            else
+            {
+                el = MapToXElement(item, itemName ?? item.GetType().Name);
+            }
 
-             el.WriteTo(writer);
+            el.WriteTo(writer);
         }
 
         private static void MapFromXElement<T>(T item, XElement el)
@@ -316,7 +315,7 @@ namespace XmlSourceGenerator.Abstractions
         private static string GetRootName<T>(string? itemName)
         {
             if (!string.IsNullOrEmpty(itemName)) return itemName!;
-            
+
             if (typeof(IXmlStreamable).IsAssignableFrom(typeof(T)) && !typeof(T).IsAbstract && !typeof(T).IsInterface)
             {
                 try
