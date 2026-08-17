@@ -12,13 +12,13 @@ namespace XmlSourceGenerator.Tests.Unit
             public string Name { get; set; }
             public string DefaultXmlRootElementName => "StreamableItem";
 
-            public void ReadFromXml(XElement element, XmlSerializationOptions options = null)
+            public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
             {
                 Id = (int)element.Element("Id");
                 Name = (string)element.Element("Name");
             }
 
-            public XElement WriteToXml(XmlSerializationOptions options = null)
+            public XElement WriteToXml(XmlSerializationOptions? options = null)
             {
                 return new XElement("StreamableItem",
                     new XElement("Id", Id),
@@ -121,13 +121,14 @@ namespace XmlSourceGenerator.Tests.Unit
         [Fact]
         public async void WriteDataToStreamAsync_EmptyCollection_WritesEmptyRoot()
         {
-            var items = new List<StreamableItem>();
-            using var stream = new MemoryStream();
+            List<StreamableItem> items = [];
+            await using MemoryStream stream = new();
 
             await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, rootName: "TestRoot");
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
+            Assert.NotNull(xml.Root);
             Assert.Equal("TestRoot", xml.Root.Name.LocalName);
             Assert.Empty(xml.Root.Elements());
         }
@@ -142,20 +143,20 @@ namespace XmlSourceGenerator.Tests.Unit
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
-            Assert.Equal("CustomRoot", xml.Root.Name.LocalName);
+            Assert.Equal("CustomRoot", xml.Root?.Name.LocalName);
         }
 
         [Fact]
         public async void WriteDataToStreamAsync_NonIXmlStreamable_UsesReflection()
         {
             var items = new[] { new SimpleItem { Value = 10, Text = "World" } };
-            using var stream = new MemoryStream();
+            await using var stream = new MemoryStream();
 
             await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, itemName: nameof(SimpleItem));
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
-            var item = xml.Root.Element(nameof(SimpleItem));
+            var item = xml.Root?.Element(nameof(SimpleItem));
             Assert.NotNull(item);
             Assert.Equal("10", item.Element("Value")?.Value);
             Assert.Equal("World", item.Element("Text")?.Value);
@@ -188,6 +189,7 @@ namespace XmlSourceGenerator.Tests.Unit
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
+            Assert.NotNull(xml.Root);
             Assert.Equal("StreamableItem", xml.Root.Name.LocalName);
             Assert.Equal("88", xml.Root.Element(nameof(StreamableItem.Id))?.Value);
         }
@@ -225,14 +227,14 @@ namespace XmlSourceGenerator.Tests.Unit
         [Fact]
         public async Task Reflection_MapToXElement_NullProperties_OmitsNulls()
         {
-            var items = new[] { new SimpleItem { Value = 7, Text = null } };
-            using var stream = new MemoryStream();
+            var items = new[] { new SimpleItem { Value = 7, Text = null! } };
+            await using var stream = new MemoryStream();
 
-            await GenericXmlStreamer.WriteDataToStreamAsync<SimpleItem>(stream, items, itemName: nameof(SimpleItem));
+            await GenericXmlStreamer.WriteEnumerableDataToStreamAsync(stream, items, itemName: nameof(SimpleItem));
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
-            var item = xml.Root.Element(nameof(SimpleItem));
+            var item = xml.Root?.Element(nameof(SimpleItem));
             Assert.NotNull(item);
             Assert.NotNull(item.Element(nameof(SimpleItem.Value)));
             Assert.Null(item.Element(nameof(SimpleItem.Text))); // Null property omitted
