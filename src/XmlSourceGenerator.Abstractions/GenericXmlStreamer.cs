@@ -198,7 +198,6 @@ namespace XmlSourceGenerator.Abstractions
             }
         }
 
-
         /// <summary>
         /// Serialize the non-enumerable <paramref name="item"/> to the given <paramref name="stream"/>.
         /// </summary>
