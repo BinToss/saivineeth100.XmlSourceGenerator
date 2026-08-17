@@ -1,12 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Concurrent;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace Reproduction
 {
@@ -28,7 +23,7 @@ namespace Reproduction
                 using var stream = new MemoryStream();
 
                 Console.WriteLine("Writing to stream...");
-                await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, itemName: "SimpleItem");
+                await GenericXmlStreamer.WriteEnumerableDataToStreamAsync(stream, items, itemName: "SimpleItem");
                 
                 Console.WriteLine("Stream Length: " + stream.Length);
                 stream.Position = 0;
@@ -80,9 +75,9 @@ namespace Reproduction
 
     public static class GenericXmlStreamer
     {
-        public static async Task WriteDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)
+        public static async Task WriteEnumerableDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)
         {
-            string targetItemName = itemName ?? typeof(T).Name; // Simplified for repro
+            string targetItemName = GetRootName<T>(itemName);
 
             var settings = new XmlWriterSettings 
             { 
@@ -95,6 +90,9 @@ namespace Reproduction
             using (var writer = XmlWriter.Create(stream, settings))
             {
                 await writer.WriteStartDocumentAsync();
+
+                // If rootName is null (e.g. single item write which handles its own root), handle it?
+                // WriteDataToStreamAsync(IEnumerable) implies a root container.
                 await writer.WriteStartElementAsync(null, rootName, null);
 
                 foreach (var item in items)
@@ -149,6 +147,24 @@ namespace Reproduction
                 }
             }
             return el;
+        }
+
+        private static string GetRootName<T>(string? itemName)
+        {
+            if (!string.IsNullOrEmpty(itemName)) return itemName!;
+
+            if (typeof(IXmlStreamable).IsAssignableFrom(typeof(T)) && !typeof(T).IsAbstract && !typeof(T).IsInterface)
+            {
+                try
+                {
+                    // Use Activator to create instance since we don't have new() constraint
+                    var instance = (IXmlStreamable)Activator.CreateInstance(typeof(T));
+                    if (instance != null) return instance.DefaultXmlRootElementName;
+                }
+                catch { }
+            }
+
+            return ReflectionHelper.GetCachedMetadata(typeof(T)).RootName;
         }
     }
 
