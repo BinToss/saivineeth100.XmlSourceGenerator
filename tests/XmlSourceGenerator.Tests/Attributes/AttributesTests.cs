@@ -85,7 +85,7 @@ namespace XmlSourceGenerator.Tests.Integration
             Assert.Equal("Alice", xml.Element("FullName")?.Value);
 
             // Verify Ignore
-            Assert.Null(xml.Element("InternalData"));
+            Assert.Null(xml.Element(nameof(AttributeUser.InternalData)));
 
             // Verify DateTime Format
             Assert.Equal("1990-05-20", xml.Element("BirthDate")?.Value);
@@ -164,16 +164,16 @@ namespace XmlSourceGenerator.Tests.Integration
             var xml2 = new XElement("CustomUser",
                 new XAttribute("id", "202"),
                 new XElement("FullName", "Bob"),
-                new XElement("BirthDate", "1985-10-15"),
-                new XElement("LoginTime", "09:15:00"),
-                new XElement("Status", "Inactive"),
-                new XElement("Tags",
+                new XElement(nameof(AttributeUser.BirthDate), "1985-10-15"),
+                new XElement(nameof(AttributeUser.LoginTime), "09:15:00"),
+                new XElement(nameof(AttributeUser.Status), "Inactive"),
+                new XElement(nameof(AttributeUser.Tags),
                     new XElement("Tag", "user"),
                     new XElement("Tag", "guest")
                 ),
                 new XElement("Role", "Viewer"),
                 new XElement("Role", "Editor"),
-                new XElement("Scores",
+                new XElement(nameof(AttributeUser.Scores),
                     new XElement("Int32", "10"),
                     new XElement("Int32", "20")
                 )

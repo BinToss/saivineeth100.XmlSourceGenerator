@@ -110,7 +110,7 @@ namespace XmlSourceGenerator.Tests.Unit
             var xml = "<?xml version=\"1.0\"?><Root><SimpleItem><Value>42</Value><Text>Hello</Text></SimpleItem></Root>";
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
 
-            var items = GenericXmlStreamer.ReadListDataFromStream<SimpleItem>(stream, itemName: "SimpleItem").ToList();
+            var items = GenericXmlStreamer.ReadListDataFromStream<SimpleItem>(stream, itemName: nameof(SimpleItem)).ToList();
 
             Assert.Single(items);
             Assert.Equal(42, items[0].Value);
@@ -154,11 +154,11 @@ namespace XmlSourceGenerator.Tests.Unit
             var items = new[] { new SimpleItem { Value = 10, Text = "World" } };
             using var stream = new MemoryStream();
 
-            await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, itemName: "SimpleItem");
+            await GenericXmlStreamer.WriteDataToStreamAsync(stream, items, itemName: nameof(SimpleItem));
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
-            var item = xml.Root.Element("SimpleItem");
+            var item = xml.Root.Element(nameof(SimpleItem));
             Assert.NotNull(item);
             Assert.Equal("10", item.Element("Value")?.Value);
             Assert.Equal("World", item.Element("Text")?.Value);
@@ -192,7 +192,7 @@ namespace XmlSourceGenerator.Tests.Unit
 
             var xml = XDocument.Load(stream);
             Assert.Equal("StreamableItem", xml.Root.Name.LocalName);
-            Assert.Equal("88", xml.Root.Element("Id")?.Value);
+            Assert.Equal("88", xml.Root.Element(nameof(StreamableItem.Id))?.Value);
         }
 
         #endregion
@@ -205,7 +205,7 @@ namespace XmlSourceGenerator.Tests.Unit
             var xml = "<?xml version=\"1.0\"?><Root><SimpleItem><Value>123</Value></SimpleItem></Root>";
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
 
-            var items = GenericXmlStreamer.ReadListDataFromStream<SimpleItem>(stream, itemName: "SimpleItem").ToList();
+            var items = GenericXmlStreamer.ReadListDataFromStream<SimpleItem>(stream, itemName: nameof(SimpleItem)).ToList();
 
             Assert.Single(items);
             Assert.Equal(123, items[0].Value);
@@ -218,7 +218,7 @@ namespace XmlSourceGenerator.Tests.Unit
             var xml = "<?xml version=\"1.0\"?><Root><SimpleItem><Value>5</Value></SimpleItem></Root>";
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
 
-            var items = GenericXmlStreamer.ReadListDataFromStream<SimpleItem>(stream, itemName: "SimpleItem").ToList();
+            var items = GenericXmlStreamer.ReadListDataFromStream<SimpleItem>(stream, itemName: nameof(SimpleItem)).ToList();
 
             Assert.Single(items);
             Assert.Equal(5, items[0].Value);
@@ -231,14 +231,14 @@ namespace XmlSourceGenerator.Tests.Unit
             var items = new[] { new SimpleItem { Value = 7, Text = null } };
             using var stream = new MemoryStream();
 
-            await GenericXmlStreamer.WriteDataToStreamAsync<SimpleItem>(stream, items, itemName: "SimpleItem");
+            await GenericXmlStreamer.WriteDataToStreamAsync<SimpleItem>(stream, items, itemName: nameof(SimpleItem));
             stream.Position = 0;
 
             var xml = XDocument.Load(stream);
-            var item = xml.Root.Element("SimpleItem");
+            var item = xml.Root.Element(nameof(SimpleItem));
             Assert.NotNull(item);
-            Assert.NotNull(item.Element("Value"));
-            Assert.Null(item.Element("Text")); // Null property omitted
+            Assert.NotNull(item.Element(nameof(SimpleItem.Value)));
+            Assert.Null(item.Element(nameof(SimpleItem.Text))); // Null property omitted
         }
 
         #endregion

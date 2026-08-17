@@ -20,8 +20,8 @@ namespace XmlSourceGenerator.Tests.Integration
 
         public void ReadFromXml(XElement element, XmlSerializationOptions options = null)
         {
-            var userIdName = options?.GetXmlName(typeof(ManualUser), "UserId") ?? "UserId";
-            var usernameName = options?.GetXmlName(typeof(ManualUser), "Username") ?? "Username";
+            var userIdName = options?.GetXmlName(typeof(ManualUser), nameof(UserId)) ?? nameof(UserId);
+            var usernameName = options?.GetXmlName(typeof(ManualUser), nameof(Username)) ?? nameof(Username);
 
             UserId = (int)element.Element(userIdName);
             Username = (string)element.Element(usernameName);
@@ -29,10 +29,10 @@ namespace XmlSourceGenerator.Tests.Integration
 
         public XElement WriteToXml(XmlSerializationOptions options = null)
         {
-            var userIdName = options?.GetXmlName(typeof(ManualUser), "UserId") ?? "UserId";
-            var usernameName = options?.GetXmlName(typeof(ManualUser), "Username") ?? "Username";
+            var userIdName = options?.GetXmlName(typeof(ManualUser), nameof(UserId)) ?? nameof(UserId);
+            var usernameName = options?.GetXmlName(typeof(ManualUser), nameof(Username)) ?? nameof(Username);
 
-            return new XElement("ManualUser",
+            return new XElement(nameof(ManualUser),
                 new XElement(userIdName, UserId),
                 new XElement(usernameName, Username));
         }
@@ -59,9 +59,13 @@ namespace XmlSourceGenerator.Tests.Integration
             var options = new XmlSerializationOptions();
             options.PropertyOverrides[(typeof(ManualUser), "Username")] = "UserName";
 
-            var xml = new XElement("ManualUser",
-                new XElement("UserId", 100),
-                new XElement("UserName", "testuser"));
+            var xml = new XElement(nameof(ManualUser),
+                new XElement(nameof(ManualUser.UserId), 100),
+                new XElement(
+                    options.GetXmlName(typeof(ManualUser), nameof(ManualUser.Username)) ?? nameof(ManualUser.Username),
+                    "testuser"
+                )
+            );
 
             var user = new ManualUser();
             user.ReadFromXml(xml, options);

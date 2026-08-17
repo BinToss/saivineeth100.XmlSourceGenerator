@@ -147,11 +147,13 @@ namespace XmlSourceGenerator.Tests.Integration
 
             var xml = parent.WriteToXml();
 
-            Assert.Equal("Parent", xml.Element("ParentName")?.Value);
-            Assert.NotNull(xml.Element("Child"));
-            Assert.Equal("Junior", xml.Element("Child").Element("ChildName")?.Value);
-            Assert.NotNull(xml.Element("Child").Element("GrandChild"));
-            Assert.Equal("42", xml.Element("Child").Element("GrandChild").Element("Value")?.Value);
+            Assert.Equal("Parent", xml.Element(nameof(ComplexParent.ParentName))?.Value);
+            var child = xml.Element(nameof(ComplexParent.Child));
+            Assert.NotNull(child);
+            Assert.Equal("Junior", child.Element(nameof(NestedChild.ChildName))?.Value);
+            var grandChild = child.Element(nameof(NestedChild.GrandChild));
+            Assert.NotNull(grandChild);
+            Assert.Equal("42", grandChild.Element(nameof(DeeplyNested.Value))?.Value);
 
             // Round trip
             var restored = new ComplexParent();
@@ -177,19 +179,19 @@ namespace XmlSourceGenerator.Tests.Integration
             };
 
             var xml = item.WriteToXml();
-            
+
             // Base property
-            Assert.Equal("Base", xml.Element("BaseName")?.Value);
-            
+            Assert.Equal("Base", xml.Element(nameof(DerivedRecursive.BaseName))?.Value);
+
             // Recursive list
-            var peers = xml.Element("Peers"); // Implicit container
+            var peers = xml.Element(nameof(DerivedRecursive.Peers)); // Implicit container
             Assert.NotNull(peers);
-            Assert.Single(peers.Elements("DerivedRecursive")); // Item name defaults to type name? Or implicit?
+            Assert.Single(peers.Elements(nameof(DerivedRecursive))); // Item name defaults to type name? Or implicit?
             // In GenerateCollectionWrite:
             // if (info.XmlElementName == null) -> var container = new XElement("Peers");
             // itemXmlName = itemType.Name -> "DerivedRecursive"
-            
-            Assert.Equal("Peer1", peers.Elements("DerivedRecursive").First().Element("BaseName")?.Value);
+
+            Assert.Equal("Peer1", peers.Elements(nameof(DerivedRecursive)).First().Element(nameof(DerivedRecursive.BaseName))?.Value);
 
             // Round trip
             var restored = new DerivedRecursive();
