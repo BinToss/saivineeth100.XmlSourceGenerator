@@ -48,6 +48,11 @@ namespace XmlSourceGenerator.Generators
             {
                 if (info.XmlElementName != null || info.IsFlattened)
                 {
+                    _sb.AppendLine("// info.XmlElementName != null || info.IsFlattened");
+                    _sb.AppendLine($"// info.IsFlattened == {info.IsFlattened}");
+                    _sb.AppendLine($"// info.TypeInfo.Kind == {info.TypeInfo.Kind}");
+                    _sb.AppendLine($"// info.XmlElementName == {info.XmlElementName}");
+
                     // Explicit or Implicit Flattening: Read directly from element
                     // If IsFlattened and not named, we might need to filter by Type Name or Polymorphic names
                     // If Polymorphic, GenerateCollectionLoop handles names internally.
@@ -58,6 +63,8 @@ namespace XmlSourceGenerator.Generators
                 else
                 {
                     // Implicit container
+                    _sb.AppendLine("// Implicit container element");
+                    _sb.AppendLine($"// info.TypeInfo.Kind == {info.TypeInfo.Kind}");
                     if (ns != null)
                         _sb.AppendLine($"var container_{info.Name} = element.Element(XNamespace.Get(\"{ns}\") + \"{info.Name}\");");
                     else

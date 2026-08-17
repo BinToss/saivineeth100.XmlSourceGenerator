@@ -69,10 +69,11 @@ namespace XmlSourceGenerator
             }
 
 
-            if (info.TypeInfo.Kind == PropertyKind.Collection)
-            {
-                info.IsFlattened = true;
-            }
+            // WARNING: this breaks implicit containers required for XmlSerializer parity!
+            // if (info.TypeInfo.Kind == PropertyKind.Collection)
+            // {
+            //     info.IsFlattened = true;
+            // }
 
             // Check attributes (with inheritance for overrides)
             foreach (var attr in GetXmlAttributes(member))

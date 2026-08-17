@@ -236,11 +236,16 @@ namespace Test
 
         public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
-            foreach (var child in element.Elements())
+            // Implicit container element
+            // info.TypeInfo.Kind == Collection
+            var container_Items = element.Element(""Items"");
+            if (container_Items != null)
             {
-                if (child.Name.LocalName != ""String"") continue;
-                if (Items == null) Items = new();
-                Items.Add(child.Value);
+                foreach (var child in container_Items.Elements())
+                {
+                    if (Items == null) Items = new();
+                    Items.Add(child.Value);
+                }
             }
         }
 
@@ -254,9 +259,11 @@ namespace Test
             var element = new XElement(DefaultXmlRootElementName);
             if (Items != null)
             {
+                var container = new XElement(""Items"");
+                element.Add(container);
                 foreach (var item in Items)
                 {
-                    element.Add(new XElement(""String"", item));
+                    container.Add(new XElement(""String"", item));
                 }
             }
             return element;

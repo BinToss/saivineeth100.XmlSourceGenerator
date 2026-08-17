@@ -99,7 +99,7 @@ namespace XmlSourceGenerator.Tests.Integration
             Assert.Equal(2, roles.Count);
             Assert.Equal("User", roles[0].Value);
 
-            // Verify Implicit List
+            // Verify Implicit List e.g. <Scores><Int32>95</Int32><Int32>88</Int32></Scores>
             var scores = xml.Element("Scores");
             Assert.NotNull(scores);
             Assert.Equal(2, scores.Elements().Count());
