@@ -2,6 +2,34 @@
 
 ## [Unreleased]
 
+### ⚠ BREAKING CHANGES
+
+* Overload `WriteDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)` has been removed. Calls to `WriteDataToStreamAsync<T>(Stream stream, T item, XmlSerializationOptions? options = null, string? rootName = null, string? itemName = null)` where `T : IEnumerable` will throw an `ArgumentException` telling you to use `WriteEnumerableDataToStreamAsync`.
+
+### Features
+
+* add `WriteEnumerableDataToStreamAsync` ([98e68c3](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/98e68c330f1d342ed696945bbf166ddb8fe77b0c))
+
+### Bug Fixes
+
+* allow implicit list serialization; do not enable `IsFlattened` on `Collection`-like objects ([675b3a3](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/675b3a3cd520a0575d117b232d5cf91bc489ae3f))
+* **Generators:** remove redundant space in `ReadFromXml` output ([c1173a2](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/c1173a27d1ea8d74c11300c7cd859db691029229))
+* **XmlSourceGenerator:** prevent CS0457 when casting `XElement` to `byte` ([00fe40c](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/00fe40c09da25f87cada171b5a63ab9c723c1b94))
+
+## 1.0.2-alpha (2026-03-30)
+
+### Features
+
+* added `[JsonIgnore]` for `DefaultXmlRootElementName`
+
+## 1.0.1-alpha (2026-03-21)
+
+### Bug Fixes
+
+* Improve `XmlWriteGenerator` polymorphic list handling: add IsSimpleKind helper, delegate to standard collection logic for simple types, and ensure correct XML parent usage for complex types.
+
+## 1.0.0-alpha (2026-01-28)
+
 ### Added
 - **Standard XML Attributes**: Added support for standard XML serialization attributes in the `XmlSourceGenerator.Attributes` namespace. These attributes mirror `System.Xml.Serialization` attributes, allowing for dependency-free usage or easy migration.
     - `[XmlRoot]`: Customizes the root element name and namespace.
