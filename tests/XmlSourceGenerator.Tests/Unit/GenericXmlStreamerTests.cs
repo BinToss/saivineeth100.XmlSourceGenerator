@@ -1,7 +1,4 @@
 using System.Text;
-using System.Xml.Linq;
-using Xunit;
-using XmlSourceGenerator.Abstractions;
 using XmlSourceGenerator.Abstractions;
 
 namespace XmlSourceGenerator.Tests.Unit

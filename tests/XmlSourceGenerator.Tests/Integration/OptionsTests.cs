@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using System.Xml.Linq;
-using Xunit;
 using XmlSourceGenerator.Abstractions;
 
 namespace XmlSourceGenerator.Tests.Integration
