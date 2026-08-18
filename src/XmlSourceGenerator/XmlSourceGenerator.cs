@@ -193,6 +193,7 @@ namespace XmlSourceGenerator
             sb.AppendLine("}");
             if (SupportsNullable(compilation))
                 sb.AppendLine($"#nullable restore");
+            sb.AppendLine();
 
             return sb.ToString();
         }
