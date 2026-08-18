@@ -126,7 +126,6 @@ namespace XmlSourceGenerator.Abstractions
         private static IEnumerable<T> ReadListDataFromReader<T>(XmlReader reader, XmlSerializationOptions? options, string? itemName) where T : new()
         {
             // Default item name to class name if not provided
-            // Default item name to class name if not provided
             string targetName = GetRootName<T>(itemName);
 
             // Skip to first content
