@@ -48,7 +48,7 @@ namespace Test
             public const string DefaultXmlName_Name = ""Name"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
             var elem_Name = element.Element(xmlName_Name);
@@ -125,7 +125,7 @@ namespace Test
             public const string DefaultXmlName_Name = ""Name"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             string xmlName_Name = ""ProductName"";
             if (options != null && options.PreferOptionsOverAttributes)
@@ -212,7 +212,7 @@ namespace Test
             public const string DefaultXmlName_Id = ""Id"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             var attr_Id = element.Attribute(""Id"");
             if (attr_Id != null)
@@ -284,13 +284,18 @@ namespace Test
             public const string DefaultXmlName_Items = ""Items"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
-            foreach (var child in element.Elements())
+            // Implicit container element
+            // info.TypeInfo.Kind == Collection
+            var container_Items = element.Element(""Items"");
+            if (container_Items != null)
             {
-                if (child.Name.LocalName != ""String"") continue;
-                if (Items == null) Items = new();
-                Items.Add(child.Value);
+                foreach (var child in container_Items.Elements())
+                {
+                    if (Items == null) Items = new();
+                    Items.Add(child.Value);
+                }
             }
         }
 
@@ -304,9 +309,11 @@ namespace Test
             var element = new XElement(DefaultXmlRootElementName);
             if (Items != null)
             {
+                var container = new XElement(""Items"");
+                element.Add(container);
                 foreach (var item in Items)
                 {
-                    element.Add(new XElement(""String"", item));
+                    container.Add(new XElement(""String"", item));
                 }
             }
             return element;
@@ -372,7 +379,7 @@ namespace Test
             public const string DefaultXmlName_BirthDate = ""BirthDate"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             var xmlName_FirstName = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_FirstName) ?? XmlTypeInfo.DefaultXmlName_FirstName;
             var elem_FirstName = element.Element(xmlName_FirstName);
@@ -480,7 +487,7 @@ namespace Test
             public const string DefaultXmlName_InternalCode = ""InternalCode"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
             var elem_Name = element.Element(xmlName_Name);
@@ -567,7 +574,7 @@ namespace Test
             public const string DefaultXmlName_LedgerEntries = ""LedgerEntries"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             if (LedgerEntries == null) LedgerEntries = new();
             foreach (var child in element.Elements())
@@ -692,7 +699,7 @@ namespace Test
             public const string DefaultXmlName_LedgerEntries = ""LedgerEntries"";
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             if (LedgerEntries == null) LedgerEntries = new();
             foreach (var child in element.Elements())
@@ -800,7 +807,7 @@ namespace Test
                 public const string DefaultXmlName_Name = ""Name"";
             }
 
-            public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+            public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
             {
                 var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
                 var elem_Name = element.Element(xmlName_Name);
@@ -893,7 +900,7 @@ namespace Test
             public static readonly XNamespace Namespace0 = XNamespace.Get(""http://example.com"");
         }
 
-        public  void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             var attr_Version = element.Attribute(""version"");
             if (attr_Version != null)

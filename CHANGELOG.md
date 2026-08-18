@@ -1,9 +1,23 @@
 # Changelog
 
-## [Unreleased] 1.0.3-alpha (2026-08-17)
+## [Unreleased] 1.1.0-alpha
+
+### ⚠ BREAKING CHANGES
+
+* Overload `WriteDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)` has been removed. Calls to `WriteDataToStreamAsync<T>(Stream stream, T item, XmlSerializationOptions? options = null, string? rootName = null, string? itemName = null)` where `T : IEnumerable` will throw an `ArgumentException` telling you to use `WriteEnumerableDataToStreamAsync`.
+
+### Features
+
+* add `WriteEnumerableDataToStreamAsync` ([98e68c3](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/98e68c330f1d342ed696945bbf166ddb8fe77b0c))
 
 ### Bug Fixes
 
+* add diagnostics' `helpLinkUri`s ([aec2943](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/aec29436bda5f14a8c4e3f9d63a279e2e146ed39))
+* allow implicit list serialization; do not enable `IsFlattened` on `Collection`-like objects ([675b3a3](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/675b3a3cd520a0575d117b232d5cf91bc489ae3f))
+* enable Release tracking analyzer ([f3dca9b](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/f3dca9b3a60447506f2d780265ac7248f99e2cf5))
+* **Generators:** remove redundant space in `ReadFromXml` output ([c1173a2](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/c1173a27d1ea8d74c11300c7cd859db691029229))
+* resolve warning RS1032; add trailing periods to diagnostic messages ([2408a32](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/2408a32bc0d1d6a01c877590a55aad8045ab0d97))
+* **XmlSourceGenerator:** prevent CS0457 when casting `XElement` to `byte` ([00fe40c](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/00fe40c09da25f87cada171b5a63ab9c723c1b94))
 * prepend source generator header; conditionally enable/restore #nullable ([2209e75](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/2209e751d191509264573be3c59fccfe6d86e137)), closes [#3](https://github.com/saivineeth100/XmlSourceGenerator/issues/3)
 * append EOF newline to generated output
 
