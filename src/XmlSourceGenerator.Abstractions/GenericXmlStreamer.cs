@@ -21,6 +21,17 @@ namespace XmlSourceGenerator.Abstractions
         // ---------------------------------------------------------
         // GENERIC READ: Stream -> IEnumerable<T>
         // ---------------------------------------------------------
+
+        /// <summary>
+        /// Parse the stream as XML, optionally filter for elements with name
+        /// <paramref name="itemName"/>, and yield the results as <see
+        /// cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="options"></param>
+        /// <param name="itemName"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ReadListDataFromStream<T>(Stream stream, XmlSerializationOptions? options = null, string? itemName = null) where T : new()
         {
             var settings = new XmlReaderSettings { Async = true };
@@ -33,6 +44,14 @@ namespace XmlSourceGenerator.Abstractions
             }
         }
 
+        /// <summary>
+        /// <inheritdoc cref="ReadListDataFromStream"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="textReader"></param>
+        /// <param name="options"></param>
+        /// <param name="itemName"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ReadListDataFromTextReader<T>(TextReader textReader, XmlSerializationOptions? options = null, string? itemName = null) where T : new()
         {
             var settings = new XmlReaderSettings { Async = true };
@@ -45,6 +64,19 @@ namespace XmlSourceGenerator.Abstractions
             }
         }
 
+        /// <summary>
+        /// Parse the stream as XML, optionally skip nodes whose names match one
+        /// of the <paramref name="path"/>s, optionally filter for
+        /// elements with name <paramref name="itemName"/>, and recursively
+        /// search for the target (<paramref name="itemName"/>, if valid) inside
+        /// the XML and yield the results as <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="textReader"></param>
+        /// <param name="path"></param>
+        /// <param name="options"></param>
+        /// <param name="itemName"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ReadNestedListDataFromTextReader<T>(TextReader textReader, string[] path, XmlSerializationOptions? options = null, string? itemName = null) where T : new()
         {
             var settings = new XmlReaderSettings { Async = true };
@@ -138,6 +170,15 @@ namespace XmlSourceGenerator.Abstractions
         // ---------------------------------------------------------
         // GENERIC READ: Stream -> T (Single Item)
         // ---------------------------------------------------------
+
+        /// <summary>
+        /// Parse a non-enumerable object of type <typeparamref name="T"/> from the <paramref name="stream"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="options"></param>
+        /// <param name="itemName">Optional parameter to set the expected root element name.</param>
+        /// <returns></returns>
         public static T? ReadDataFromStream<T>(Stream stream, XmlSerializationOptions? options = null, string? itemName = null) where T : new()
         {
             try
@@ -167,6 +208,18 @@ namespace XmlSourceGenerator.Abstractions
         // ---------------------------------------------------------
         // GENERIC WRITE: IEnumerable<T> -> Stream
         // ---------------------------------------------------------
+
+        /// <summary>
+        /// Serialize the enumerable <paramref name="items"/> collection to the
+        /// <paramref name="stream"/> as a named XmlArray.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="items"></param>
+        /// <param name="options"></param>
+        /// <param name="rootName"></param>
+        /// <param name="itemName"></param>
+        /// <returns></returns>
         public static async Task WriteEnumerableDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)
         {
             string targetItemName = GetRootName<T>(itemName);
@@ -198,8 +251,12 @@ namespace XmlSourceGenerator.Abstractions
             }
         }
 
+        // ---------------------------------------------------------
+        // GENERIC WRITE: T -> Stream
+        // ---------------------------------------------------------
+
         /// <summary>
-        /// Serialize the non-enumerable <paramref name="item"/> to the given <paramref name="stream"/>.
+        /// Serialize a non-enumerable <paramref name="item"/> to the <paramref name="stream"/>.
         /// </summary>
         /// <typeparam name="T">Any non-enumerable type</typeparam>
         /// <returns></returns>
