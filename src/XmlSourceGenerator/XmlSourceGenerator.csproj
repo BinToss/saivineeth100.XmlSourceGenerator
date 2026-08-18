@@ -16,6 +16,9 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="XmlSourceGenerator.UnitTests" />
+    <!-- enable Release Tracking analyzer -->
+    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
+    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
   </ItemGroup>
 
   <ItemGroup>
