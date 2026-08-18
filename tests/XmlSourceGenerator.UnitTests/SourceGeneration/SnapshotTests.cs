@@ -50,6 +50,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""SimpleModel"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -118,6 +119,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""Product"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -185,6 +187,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""Product"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -244,6 +247,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""Order"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -336,6 +340,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""Person"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -412,6 +417,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""Product"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -496,6 +502,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""Voucher"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -607,6 +614,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""Voucher"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
@@ -690,6 +698,7 @@ namespace Test
             [global::System.ComponentModel.Browsable(false)]
             [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
             [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+            [global::System.Text.Json.Serialization.JsonIgnore]
             public string DefaultXmlRootElementName => ""NestedChild"";
             public  XElement WriteToXml(XmlSerializationOptions? options = null)
             {
@@ -791,6 +800,7 @@ namespace Test
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::System.Diagnostics.DebuggerBrowsable(global::System.Diagnostics.DebuggerBrowsableState.Never)]
+        [global::System.Text.Json.Serialization.JsonIgnore]
         public string DefaultXmlRootElementName => ""ENVELOPE"";
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
