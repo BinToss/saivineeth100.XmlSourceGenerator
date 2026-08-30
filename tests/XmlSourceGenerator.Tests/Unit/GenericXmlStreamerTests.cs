@@ -119,7 +119,7 @@ namespace XmlSourceGenerator.Tests.Unit
         #region WriteEnumerableDataToStreamAsync Tests
 
         [Fact]
-        public async void WriteEnumerableDataToStreamAsync_EmptyCollection_WritesEmptyRoot()
+        public async Task WriteEnumerableDataToStreamAsync_EmptyCollection_WritesEmptyRoot()
         {
             List<StreamableItem> items = [];
             await using MemoryStream stream = new();
@@ -134,7 +134,7 @@ namespace XmlSourceGenerator.Tests.Unit
         }
 
         [Fact]
-        public async void WriteEnumerableDataToStreamAsync_CustomRootName_UsesCustomName()
+        public async Task WriteEnumerableDataToStreamAsync_CustomRootName_UsesCustomName()
         {
             var items = new[] { new StreamableItem { Id = 1, Name = "Test" } };
             using var stream = new MemoryStream();
@@ -147,7 +147,7 @@ namespace XmlSourceGenerator.Tests.Unit
         }
 
         [Fact]
-        public async void WriteEnumerableDataToStreamAsync_NonIXmlStreamable_UsesReflection()
+        public async Task WriteEnumerableDataToStreamAsync_NonIXmlStreamable_UsesReflection()
         {
             var items = new[] { new SimpleItem { Value = 10, Text = "World" } };
             await using var stream = new MemoryStream();
@@ -180,7 +180,7 @@ namespace XmlSourceGenerator.Tests.Unit
         }
 
         [Fact]
-        public async void WriteDataToStreamAsync_SingleItem_WritesRoot()
+        public async Task WriteDataToStreamAsync_SingleItem_WritesRoot()
         {
             var item = new StreamableItem { Id = 88, Name = "SingleWrite" };
             using var stream = new MemoryStream();
