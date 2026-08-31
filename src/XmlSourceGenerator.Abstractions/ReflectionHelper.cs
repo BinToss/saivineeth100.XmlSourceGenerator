@@ -181,7 +181,7 @@ namespace XmlSourceGenerator.Abstractions
                 Type = type;
                 RootName = type.Name; // Default
                 // Check XmlRoot?
-                var rootAttr = type.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().Name == "XmlRootAttribute");
+                var rootAttr = type.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().Name == nameof(XmlRootAttribute));
                 if (rootAttr != null)
                 {
                      var nameProp = rootAttr.GetType().GetProperty("ElementName");
@@ -220,20 +220,20 @@ namespace XmlSourceGenerator.Abstractions
                 foreach (var attr in property.GetCustomAttributes(true))
                 {
                     var typeName = attr.GetType().Name;
-                    if (typeName == "XmlAttributeAttribute")
+                    if (typeName == nameof(XmlAttributeAttribute))
                     {
                         IsAttribute = true;
-                        var nameProp = attr.GetType().GetProperty("AttributeName");
+                        var nameProp = attr.GetType().GetProperty(nameof(XmlAttributeAttribute.AttributeName));
                         var val = nameProp?.GetValue(attr) as string;
                         if (!string.IsNullOrEmpty(val)) XmlName = val!;
                     }
-                    else if (typeName == "XmlElementAttribute")
+                    else if (typeName == nameof(XmlElementAttribute))
                     {
-                        var nameProp = attr.GetType().GetProperty("ElementName");
+                        var nameProp = attr.GetType().GetProperty(nameof(XmlElementAttribute.ElementName));
                         var val = nameProp?.GetValue(attr) as string;
                         if (!string.IsNullOrEmpty(val)) XmlName = val!;
                     }
-                    else if (typeName == "XmlIgnoreAttribute")
+                    else if (typeName == nameof(XmlIgnoreAttribute))
                     {
                         IsIgnored = true;
                     }

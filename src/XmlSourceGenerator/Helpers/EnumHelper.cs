@@ -45,7 +45,7 @@ namespace XmlSourceGenerator.Helpers
                 if (!member.IsConst) continue;
 
                 string xmlName = member.Name;
-                var attr = member.GetAttributes().FirstOrDefault(ad => ad.AttributeClass?.Name == "XmlEnumAttribute");
+                var attr = member.GetAttributes().FirstOrDefault(ad => ad.AttributeClass?.Name == nameof(Abstractions.XmlEnumAttribute));
                 if (attr != null)
                 {
                     if (attr.ConstructorArguments.Length > 0 && attr.ConstructorArguments[0].Value is { } nonNullValue)

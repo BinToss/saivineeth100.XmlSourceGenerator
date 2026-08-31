@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using XmlSourceGenerator.Abstractions;
 using XmlSourceGenerator.Helpers;
 using XmlSourceGenerator.Models;
 
@@ -82,11 +83,11 @@ namespace XmlSourceGenerator
 
                 switch (attrName)
                 {
-                    case "XmlIgnoreAttribute":
+                    case nameof(XmlIgnoreAttribute):
                         info.IsIgnored = true;
                         break;
 
-                    case "XmlElementAttribute":
+                    case nameof(XmlElementAttribute):
                         string? elementName = null;
                         INamedTypeSymbol? targetType = null;
 
@@ -159,7 +160,7 @@ namespace XmlSourceGenerator
                         }
                         break;
 
-                    case "XmlAttributeAttribute":
+                    case nameof(XmlAttributeAttribute):
                         info.SerializeAsAttribute = true;
                         if (attr.ConstructorArguments.Length > 0 && attr.ConstructorArguments[0].Value is { } value)
                         {
@@ -172,11 +173,11 @@ namespace XmlSourceGenerator
                         info.Namespace = attr.NamedArguments.FirstOrDefault(a => a.Key == "Namespace").Value.Value as string;
                         break;
 
-                    case "XmlTextAttribute":
+                    case nameof(XmlTextAttribute):
                         info.SerializeAsInnerText = true;
                         break;
 
-                    case "XmlFormatAttribute":
+                    case nameof(XmlFormatAttribute):
                         info.Formats = attr.ConstructorArguments[0].Values
                             // convert to string and remove null/empty values
                             .Select(v => (string?)v.Value ?? string.Empty)
@@ -184,7 +185,7 @@ namespace XmlSourceGenerator
                             .ToArray();
                         break;
 
-                    case "XmlArrayAttribute":
+                    case nameof(XmlArrayAttribute):
                         if (attr.ConstructorArguments.Length > 0)
                         {
                             info.ArrayElementName = (string?)attr.ConstructorArguments[0].Value;
@@ -201,7 +202,7 @@ namespace XmlSourceGenerator
                         }
                         break;
 
-                    case "XmlArrayItemAttribute":
+                    case nameof(XmlArrayItemAttribute):
                         if (attr.ConstructorArguments.Length > 0)
                         {
                             info.ArrayItemElementName = (string?)attr.ConstructorArguments[0].Value;
@@ -212,7 +213,7 @@ namespace XmlSourceGenerator
                         }
                         break;
 
-                    case "XmlStreamListElementAttribute":
+                    case nameof(XmlStreamListElementAttribute):
                         // args should be non-null
                         var xmlName = (string)attr.ConstructorArguments[0].Value!;
                         var tType = (INamedTypeSymbol)attr.ConstructorArguments[1].Value!;
@@ -225,7 +226,7 @@ namespace XmlSourceGenerator
                         });
                         break;
 
-                    case "XmlAnyElementAttribute":
+                    case nameof(XmlAnyElementAttribute):
                         info.IsAnyElement = true;
                         var anyOrderArg = attr.NamedArguments.FirstOrDefault(a => a.Key == "Order");
                         if (anyOrderArg.Value.Value != null)
@@ -234,7 +235,7 @@ namespace XmlSourceGenerator
                         }
                         break;
 
-                    case "XmlAnyAttributeAttribute":
+                    case nameof(XmlAnyAttributeAttribute):
                         info.IsAnyAttribute = true;
                         break;
                 }
@@ -328,14 +329,14 @@ namespace XmlSourceGenerator
             {
                 var name = a.AttributeClass?.Name;
                 return name != null && (
-                    name == "XmlElementAttribute" ||
-                    name == "XmlAttributeAttribute" ||
-                    name == "XmlIgnoreAttribute" ||
-                    name == "XmlTextAttribute" ||
-                    name == "XmlArrayAttribute" ||
-                    name == "XmlArrayItemAttribute" ||
-                    name == "XmlAnyElementAttribute" ||
-                    name == "XmlAnyAttributeAttribute");
+                    name == nameof(XmlElementAttribute) ||
+                    name == nameof(XmlAttributeAttribute) ||
+                    name == nameof(XmlIgnoreAttribute) ||
+                    name == nameof(XmlTextAttribute) ||
+                    name == nameof(XmlArrayAttribute) ||
+                    name == nameof(XmlArrayItemAttribute) ||
+                    name == nameof(XmlAnyElementAttribute) ||
+                    name == nameof(XmlAnyAttributeAttribute));
             });
         }
 
@@ -344,13 +345,13 @@ namespace XmlSourceGenerator
             // Check for XmlInclude on the type definition
             foreach (var attr in type.GetAttributes())
             {
-                if (attr.AttributeClass?.Name == "XmlIncludeAttribute")
+                if (attr.AttributeClass?.Name == nameof(XmlIncludeAttribute))
                 {
                     if (attr.ConstructorArguments.Length > 0 && attr.ConstructorArguments[0].Value is INamedTypeSymbol targetType)
                     {
                         string xmlName = targetType.Name;
 
-                        var typeAttr = targetType.GetAttributes().FirstOrDefault(a => a.AttributeClass?.Name == "XmlTypeAttribute");
+                        var typeAttr = targetType.GetAttributes().FirstOrDefault(a => a.AttributeClass?.Name == nameof(XmlTypeAttribute));
                         if (typeAttr != null)
                         {
                             if (typeAttr.ConstructorArguments.Length > 0 && typeAttr.ConstructorArguments[0].Value is { } value)
@@ -368,7 +369,7 @@ namespace XmlSourceGenerator
                         }
                         else
                         {
-                            var rootAttr = targetType.GetAttributes().FirstOrDefault(a => a.AttributeClass?.Name == "XmlRootAttribute");
+                            var rootAttr = targetType.GetAttributes().FirstOrDefault(a => a.AttributeClass?.Name == nameof(XmlRootAttribute));
                             if (rootAttr != null && rootAttr.ConstructorArguments.Length > 0 && rootAttr.ConstructorArguments[0].Value is { } nonNullValue)
                             {
                                 xmlName = (string)nonNullValue;
