@@ -1,6 +1,7 @@
 using System.Xml;
 using System.Xml.Linq;
 
+// ? This seems to be a sample implementation. Why is it in a redistributed binary?
 namespace XmlSourceGenerator.Abstractions
 {
     public class User
