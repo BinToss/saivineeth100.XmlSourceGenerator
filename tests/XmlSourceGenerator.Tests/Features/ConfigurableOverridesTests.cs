@@ -1,6 +1,5 @@
 using FluentAssertions;
 using XmlSourceGenerator.Abstractions;
-using FluentAssertions;
 
 namespace XmlSourceGenerator.Tests.Features
 {
