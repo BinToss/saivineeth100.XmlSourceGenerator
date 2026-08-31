@@ -6,6 +6,8 @@ namespace XmlSourceGenerator.Models
         public string Namespace { get; set; }
         public string FullName { get; set; }
         public bool IsEnum { get; set; }
+        /// <summary>Symbol's type is annotated with '?'</summary>
+        public bool IsNullableAnnotated { get; set; }
         public bool IsReferenceType { get; set; }
         public bool IsString { get; set; }
         public bool ImplementsIXmlStreamable { get; set; }

@@ -51,6 +51,10 @@ namespace XmlSourceGenerator
                 info.ItemTypeInfo = CreateTypeModel(itemType);
             }
 
+
+            // annotated with '?' modifier
+            if (type.NullableAnnotation == NullableAnnotation.Annotated)
+                info.TypeInfo.IsNullableAnnotated = true;
             // Defaults based on type
             if (isNullable)
             {
