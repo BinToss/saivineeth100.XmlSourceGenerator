@@ -99,11 +99,10 @@ namespace XmlSourceGenerator.Tests.Features
             // Configure polymorphic mappings dynamically
             options.PropertySettings.Add((typeof(PolymorphicContainer), "Item"), new XmlPropertySettings
             {
-                PolymorphicMappings = new List<(Type, string)>
-                {
+                PolymorphicMappings = [
                     (typeof(DerivedA), "ItemA"),
                     (typeof(DerivedB), "ItemB")
-                }
+                ]
             });
 
             var xml = container.WriteToXml(options);
@@ -134,11 +133,10 @@ namespace XmlSourceGenerator.Tests.Features
 
             options.PropertySettings.Add((typeof(PolymorphicContainer), "Item"), new XmlPropertySettings
             {
-                PolymorphicMappings = new List<(Type, string)>
-                {
+                PolymorphicMappings = [
                     (typeof(DerivedA), "ItemA"),
                     (typeof(DerivedB), "ItemB")
-                }
+                ]
             });
 
             var container = new PolymorphicContainer();
