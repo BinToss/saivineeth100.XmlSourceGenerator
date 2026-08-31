@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Collections.Concurrent;
@@ -56,6 +57,7 @@ namespace XmlSourceGenerator.Abstractions
             return element;
         }
 
+        [return: NotNullIfNotNull(nameof(element))]
         public static T? Deserialize<T>(XElement? element, XmlSerializationOptions? options) where T : new()
         {
             if (element == null) return default;

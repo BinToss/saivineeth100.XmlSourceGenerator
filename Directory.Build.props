@@ -25,6 +25,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Optional: Output the generated files to the obj\GeneratedFiles folder  -->
+    <EmitCompilerGeneratedFiles>True</EmitCompilerGeneratedFiles>
 
     <!-- Package Settings -->
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>

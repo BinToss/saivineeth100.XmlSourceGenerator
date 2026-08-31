@@ -27,7 +27,7 @@ namespace Reproduction
 
                 Console.WriteLine("Stream Length: " + stream.Length);
                 stream.Position = 0;
-                using var reader = new StreamReader(stream, System.Text.Encoding.UTF8, leaveOpen: true);
+                using var reader = new StreamReader(stream, System.Text.Encoding.UTF8, /*net48-compat*/detectEncodingFromByteOrderMarks: true, /*net48-compat*/bufferSize: -1, leaveOpen: true);
                 var text = reader.ReadToEnd();
                 Console.WriteLine("XML Content:");
                 Console.WriteLine(text);

@@ -115,7 +115,7 @@ public partial class TestClass
             var test = new CSharpAnalyzerTest<XmlUsageAnalyzer, DefaultVerifier>
             {
                 TestCode = source,
-                ReferenceAssemblies = ReferenceAssemblies.Net.Net60 // Use .NET 6 reference assemblies
+                ReferenceAssemblies = ReferenceAssemblies.Net.Net100 // Use .NET 10 reference assemblies (latest in Abstractions's TargetFramework)
             };
 
             // Add Abstractions reference

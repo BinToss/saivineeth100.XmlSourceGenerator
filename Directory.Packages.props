@@ -2,9 +2,15 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <NeedsSystemTextJsonPackage>$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', 'netstandard|net4'))</NeedsSystemTextJsonPackage>
   </PropertyGroup>
   <ItemGroup>
     <!-- Source Generator Dependencies -->
+    <PackageVersion Include="Meziantou.Polyfill" Version="1.0.164" />
+    <PackageVersion Condition="$(TargetFramework) == 'net462'"
+                    Include="System.ValueTuple" Version="4.6.2"  />
+    <PackageVersion Condition="$(NeedsSystemTextJsonPackage)"
+                    Include="System.Text.Json" Version="10.0.11" /> <!-- JsonIgnoreAttribute -->
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.9.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0" />

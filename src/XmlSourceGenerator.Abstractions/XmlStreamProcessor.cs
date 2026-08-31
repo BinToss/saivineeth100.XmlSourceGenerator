@@ -73,7 +73,13 @@ namespace XmlSourceGenerator.Abstractions
                     var el = new XElement("User",
                         new XAttribute("Role", user.Role ?? ""),
                         new XElement("Name", user.Name),
+#if NET5_0
+#pragma warning disable CS8604 // Possible null reference argument when targeting net5.0
+#endif
                         user.Age.HasValue ? new XElement("Age", user.Age) : null
+#if NET5_0
+#pragma warning restore CS8604 // Possible null reference argument when targeting net5.0
+#endif
                     );
 
                     // Efficiently write the XElement to the stream
