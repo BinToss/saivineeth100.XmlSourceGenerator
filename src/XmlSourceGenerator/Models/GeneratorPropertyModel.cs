@@ -22,6 +22,7 @@ namespace XmlSourceGenerator.Models
         public string? ArrayElementName { get; set; }
         public string? ArrayItemElementName { get; set; }
         public string? Namespace { get; set; }
+        /// <summary>If <see langword="true"/>, the XmlElement/XElement will have the `xsi:nil` attribute.</summary>
         public bool? IsNullable { get; set; }
 
         public string[]? Formats { get; set; }
