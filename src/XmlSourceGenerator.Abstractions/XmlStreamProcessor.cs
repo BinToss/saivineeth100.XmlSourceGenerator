@@ -38,9 +38,9 @@ namespace XmlSourceGenerator.Abstractions
                         // 2. Map XElement -> Object using nice LINQ
                         yield return new User
                         {
-                            Name = (string)el.Element("Name"),
+                            Name = (string?)el.Element("Name") ?? string.Empty,
                             Age = (int?)el.Element("Age"),
-                            Role = (string)el.Attribute("Role")
+                            Role = (string?)el.Attribute("Role") ?? string.Empty
                         };
                         
                         // 'el' goes out of scope here and is eligible for GC

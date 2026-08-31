@@ -111,11 +111,11 @@ namespace XmlSourceGenerator.Analyzers
              if (xmlAttribute != null)
              {
                  if (xmlAttribute.ConstructorArguments.Length > 0)
-                     xmlName = (string)xmlAttribute.ConstructorArguments[0].Value;
+                     xmlName = (string)xmlAttribute.ConstructorArguments[0].Value!;
                  else
                  {
                      var arg = xmlAttribute.NamedArguments.FirstOrDefault(a => a.Key == "AttributeName");
-                     if (!arg.Value.IsNull) xmlName = (string)arg.Value.Value;
+                     if (!arg.Value.IsNull) xmlName = (string)arg.Value.Value!;
                  }
              }
              else if (xmlElement != null)
@@ -127,7 +127,7 @@ namespace XmlSourceGenerator.Analyzers
                  else
                  {
                      var arg = xmlElement.NamedArguments.FirstOrDefault(a => a.Key == "ElementName");
-                     if (!arg.Value.IsNull) xmlName = (string)arg.Value.Value;
+                     if (!arg.Value.IsNull) xmlName = (string)arg.Value.Value!;
                  }
              }
 

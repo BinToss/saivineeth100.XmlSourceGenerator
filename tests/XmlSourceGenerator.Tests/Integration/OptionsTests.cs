@@ -6,7 +6,7 @@ namespace XmlSourceGenerator.Tests.Integration
     public partial class Product
     {
         public int ProductId { get; set; }
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
     }
 
     public class OptionsTests

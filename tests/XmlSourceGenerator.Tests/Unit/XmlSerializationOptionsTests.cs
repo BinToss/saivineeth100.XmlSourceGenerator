@@ -73,7 +73,7 @@ namespace XmlSourceGenerator.Tests.Unit
 
         private class TestClass
         {
-            public string PropertyName { get; set; }
+            public string? PropertyName { get; set; }
         }
     }
 }

@@ -74,14 +74,14 @@ namespace XmlSourceGenerator.Abstractions
             }
 
             // Fallback to legacy overrides
-            if (PropertyOverrides.TryGetValue((type, propertyName), out string overrideName))
+            if (PropertyOverrides.TryGetValue((type, propertyName), out string? overrideName))
             {
                 return overrideName;
             }
 
-            if (PropertyNamingPolicy != null)
+            if (PropertyNamingPolicy != null && PropertyNamingPolicy.ConvertName(propertyName) is string s)
             {
-                return PropertyNamingPolicy.ConvertName(propertyName);
+                return s;
             }
 
             return propertyName;
@@ -100,7 +100,7 @@ namespace XmlSourceGenerator.Abstractions
             }
 
             // Fallback to legacy overrides
-            if (PropertyOverrides.TryGetValue((type, propertyName), out string overrideName))
+            if (PropertyOverrides.TryGetValue((type, propertyName), out string? overrideName))
             {
                 return overrideName;
             }

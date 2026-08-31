@@ -32,7 +32,7 @@ public static class GeneratorOutputHelper
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
     }
 
-    public static string CaptureGeneratedCode(string source, string classNameFilter = null)
+    public static string CaptureGeneratedCode(string source, string? classNameFilter = null)
     {
         var compilation = CreateCompilation(source);
         var generator = new XmlGenerator().AsSourceGenerator();
@@ -61,7 +61,7 @@ public static class GeneratorOutputHelper
         return filtered?.ToString() ?? throw new InvalidOperationException($"No generated file found for {classNameFilter}");
     }
 
-    public static void VerifyGeneratedCode(string source, string expectedCode, string classNameFilter = null)
+    public static void VerifyGeneratedCode(string source, string expectedCode, string? classNameFilter = null)
     {
         var actualCode = CaptureGeneratedCode(source, classNameFilter);
         

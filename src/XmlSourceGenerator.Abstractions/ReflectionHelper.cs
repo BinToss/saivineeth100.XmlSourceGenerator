@@ -89,7 +89,7 @@ namespace XmlSourceGenerator.Abstractions
                     {
                         try 
                         {
-                            object val = ConvertValue(childEl.Value, prop.UnderlyingType);
+                            object? val = ConvertValue(childEl.Value, prop.UnderlyingType);
                             prop.Property.SetValue(item, val);
                         }
                         catch { /* Ignore conversion failure */ }
@@ -99,9 +99,9 @@ namespace XmlSourceGenerator.Abstractions
                         // Recursive deserialization
                         // For nested properties, we normally create new instances.
                         // We use Deserialize<T> via reflection because we need to know the type to create.
-                        var method = typeof(ReflectionHelper).GetMethod(nameof(Deserialize), BindingFlags.Public | BindingFlags.Static)
+                        var method = typeof(ReflectionHelper).GetMethod(nameof(Deserialize), BindingFlags.Public | BindingFlags.Static)!
                                         .MakeGenericMethod(prop.PropertyType);
-                        var val = method.Invoke(null, new object[] { childEl, options });
+                        var val = method.Invoke(null, new object?[] { childEl, options });
                         prop.Property.SetValue(item, val);
                     }
                 }
@@ -113,7 +113,7 @@ namespace XmlSourceGenerator.Abstractions
                     {
                         try 
                         {
-                            object val = ConvertValue(attr.Value, prop.UnderlyingType);
+                            object? val = ConvertValue(attr.Value, prop.UnderlyingType);
                             prop.Property.SetValue(item, val);
                         }
                         catch { /* Ignore conversion failure */ }
@@ -124,19 +124,32 @@ namespace XmlSourceGenerator.Abstractions
 
         public static bool IsSimpleType(Type type)
         {
-            return type.IsPrimitive || type.IsEnum || type == typeof(string) || type == typeof(DateTime) || type == typeof(decimal) || type == typeof(Guid) || 
-                   type.Name == "DateOnly" || type.Name == "TimeOnly" || type.Name == "TimeSpan" ||
-                   (Nullable.GetUnderlyingType(type) != null && IsSimpleType(Nullable.GetUnderlyingType(type)));
+            if (type.IsPrimitive || type.IsEnum || type == typeof(string) || type == typeof(DateTime) || type == typeof(decimal) || type == typeof(Guid) ||
+                type.Name == "DateOnly" || type.Name == "TimeOnly" || type.Name == "TimeSpan")
+                return true;
+            return Nullable.GetUnderlyingType(type) is { } underlyingType && IsSimpleType(underlyingType);
         }
 
         public static string FormatValue(object value, Type type)
         {
             if (value is DateTime dt) return dt.ToString("s"); // ISO 8601
             if (value is bool b) return b ? "true" : "false"; // XML lowercase
-            return Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture);
+            return ConvertToString(value);
         }
 
-        private static object ConvertValue(string value, Type type)
+        /// <summary> <see cref="Convert.ToString(object?, IFormatProvider?)"/>
+        /// notes the following: "The string representation of value, or
+        /// string.Empty if value is an object whose value is null. If value is
+        /// null, the method returns null."<br/>
+        /// In other words, it should utilize `[return:
+        /// NotNullIfNotNull(nameof(value))]`, but doesn't.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [return: NotNullIfNotNull(nameof(value))]
+        private static string? ConvertToString(object? value) => Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture);
+
+        private static object? ConvertValue(string value, Type type)
         {
              if (type == typeof(DateTime)) return DateTime.Parse(value);
              if (type == typeof(bool)) return XmlConvert.ToBoolean(value);

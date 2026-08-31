@@ -11,8 +11,8 @@ namespace XmlSourceGenerator.Benchmarks
     public partial class BenchmarkEntity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public double Value { get; set; }
         public bool IsActive { get; set; }
     }
@@ -27,6 +27,22 @@ namespace XmlSourceGenerator.Benchmarks
         private XElement _smallXml;
         private XElement _largeXml;
         private XElement _hugeXml;
+
+        // assigning these in a constructor resolved nullable warnings.
+        public GenericXmlStreamerBenchmarks()
+        {
+            // Small: 10 items
+            _smallCollection = CreateEntities(10);
+            _smallXml = CreateXml(_smallCollection);
+
+            // Large: 1,000 items
+            _largeCollection = CreateEntities(1000);
+            _largeXml = CreateXml(_largeCollection);
+
+            // Huge: 10,000 items
+            _hugeCollection = CreateEntities(10000);
+            _hugeXml = CreateXml(_hugeCollection);
+        }
 
         [GlobalSetup]
         public void Setup()

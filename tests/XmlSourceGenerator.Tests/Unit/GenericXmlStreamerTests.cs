@@ -9,13 +9,13 @@ namespace XmlSourceGenerator.Tests.Unit
         public class StreamableItem : IXmlStreamable
         {
             public int Id { get; set; }
-            public string Name { get; set; }
+            public string? Name { get; set; }
             public string DefaultXmlRootElementName => "StreamableItem";
 
             public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
             {
-                Id = (int)element.Element("Id");
-                Name = (string)element.Element("Name");
+                Id = element.Element("Id") is { } id ? (int)id : 0;
+                Name = (string?)element.Element("Name");
             }
 
             public XElement WriteToXml(XmlSerializationOptions? options = null)
@@ -30,7 +30,7 @@ namespace XmlSourceGenerator.Tests.Unit
         public class SimpleItem
         {
             public int Value { get; set; }
-            public string Text { get; set; }
+            public string? Text { get; set; }
         }
 
         #region ReadDataFromStream Tests

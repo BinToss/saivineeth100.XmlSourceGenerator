@@ -136,7 +136,7 @@ namespace XmlSourceGenerator.Abstractions
             {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == targetName)
                 {
-                    T item = default;
+                    T? item;
                     try
                     {
                         item = ParseItem<T>(reader, options);
@@ -338,7 +338,7 @@ namespace XmlSourceGenerator.Abstractions
             foreach (var propMeta in metadata.Properties.Where(p => p.CanWrite))
             {
                 // Try Element first, then Attribute
-                var xmlValue = (string)el.Element(propMeta.Name) ?? (string)el.Attribute(propMeta.Name);
+                var xmlValue = (string?)el.Element(propMeta.Name) ?? (string?)el.Attribute(propMeta.Name);
 
                 if (xmlValue != null)
                 {
@@ -389,7 +389,7 @@ namespace XmlSourceGenerator.Abstractions
                 try
                 {
                     // Use Activator to create instance since we don't have new() constraint
-                    var instance = (IXmlStreamable)Activator.CreateInstance(typeof(T));
+                    var instance = (IXmlStreamable?)Activator.CreateInstance<T>();
                     if (instance != null) return instance.DefaultXmlRootElementName;
                 }
                 catch { }

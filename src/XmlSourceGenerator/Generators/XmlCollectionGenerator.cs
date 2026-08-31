@@ -138,7 +138,8 @@ namespace XmlSourceGenerator.Generators
 
         public void GenerateCollectionWrite(GeneratorPropertyModel info)
         {
-            var itemTypeModel = info.ItemTypeInfo;
+            var itemTypeModel = info.ItemTypeInfo
+                ?? throw new ArgumentException($"{nameof(GeneratorPropertyModel)} must have {nameof(GeneratorPropertyModel.ItemTypeInfo)!}");
 
             bool isWrapped = info.ArrayElementName != null;
             string containerName = info.ArrayElementName ?? info.Name;

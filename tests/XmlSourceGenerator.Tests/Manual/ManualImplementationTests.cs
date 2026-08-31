@@ -9,20 +9,20 @@ namespace XmlSourceGenerator.Tests.Integration
     public class ManualUser : IXmlStreamable
     {
         public int UserId { get; set; }
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         public string DefaultXmlRootElementName => "ManualUser";
 
-        public void ReadFromXml(XElement element, XmlSerializationOptions options = null)
+        public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
             var userIdName = options?.GetXmlName(typeof(ManualUser), nameof(UserId)) ?? nameof(UserId);
             var usernameName = options?.GetXmlName(typeof(ManualUser), nameof(Username)) ?? nameof(Username);
 
-            UserId = (int)element.Element(userIdName);
-            Username = (string)element.Element(usernameName);
+            UserId = (int)(element.Element(userIdName) ?? throw new NullReferenceException($"XML Element with name \"{userIdName}\" cannot be found!"));
+            Username = (string)(element.Element(usernameName) ?? throw new NullReferenceException($"XML Element with name \"{Username}\" cannot be found!"));
         }
 
-        public XElement WriteToXml(XmlSerializationOptions options = null)
+        public XElement WriteToXml(XmlSerializationOptions? options = null)
         {
             var userIdName = options?.GetXmlName(typeof(ManualUser), nameof(UserId)) ?? nameof(UserId);
             var usernameName = options?.GetXmlName(typeof(ManualUser), nameof(Username)) ?? nameof(Username);

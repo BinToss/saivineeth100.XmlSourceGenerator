@@ -22,14 +22,14 @@ namespace XmlSourceGenerator.Abstractions
         /// </summary>
         /// <param name="name">The name to convert.</param>
         /// <returns>The converted name.</returns>
-        public abstract string ConvertName(string name);
+        public abstract string? ConvertName(string? name);
     }
 
     internal class CamelCaseXmlNamingPolicy : XmlNamingPolicy
     {
-        public override string ConvertName(string name)
+        public override string? ConvertName(string? name)
         {
-            if (string.IsNullOrEmpty(name) || !char.IsUpper(name[0]))
+            if (name is null or "" || !char.IsUpper(name[0]))
                 return name;
 
             char[] chars = name.ToCharArray();
@@ -66,9 +66,9 @@ namespace XmlSourceGenerator.Abstractions
 
     internal class SnakeCaseXmlNamingPolicy : XmlNamingPolicy
     {
-        public override string ConvertName(string name)
+        public override string? ConvertName(string? name)
         {
-            if (string.IsNullOrEmpty(name)) return name;
+            if (name is null or "") return name;
 
             var sb = new StringBuilder();
             for (int i = 0; i < name.Length; i++)

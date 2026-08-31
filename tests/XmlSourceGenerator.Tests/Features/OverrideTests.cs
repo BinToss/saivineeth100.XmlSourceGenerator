@@ -10,7 +10,7 @@ namespace XmlSourceGenerator.Tests.Integration
     public partial class VirtualBase
     {
         [XmlElement("BaseName")]
-        public virtual string Name { get; set; }
+        public virtual string? Name { get; set; }
 
         public virtual int Value { get; set; }
     }
@@ -20,7 +20,7 @@ namespace XmlSourceGenerator.Tests.Integration
     {
         // Override and rename
         [XmlElement("OverriddenName")]
-        public override string Name { get; set; }
+        public override string? Name { get; set; }
 
         // Override and ignore
         [XmlIgnore]
@@ -32,7 +32,7 @@ namespace XmlSourceGenerator.Tests.Integration
     {
         // Hide with 'new' and rename
         [XmlElement("HiddenName")]
-        public new string Name { get; set; }
+        public new string? Name { get; set; }
     }
 
     public class OverrideTests
@@ -49,8 +49,9 @@ namespace XmlSourceGenerator.Tests.Integration
             var xml = entity.WriteToXml();
 
             // Should use the attribute from the derived class
-            Assert.NotNull(xml.Element("OverriddenName"));
-            Assert.Equal("TestName", xml.Element("OverriddenName").Value);
+            XElement? overriddenName = xml.Element("OverriddenName");
+            Assert.NotNull(overriddenName);
+            Assert.Equal("TestName", overriddenName.Value);
             
             // Should NOT use the base class attribute name
             Assert.Null(xml.Element("BaseName"));
@@ -82,8 +83,9 @@ namespace XmlSourceGenerator.Tests.Integration
             var xml = entity.WriteToXml();
 
             // Should use the 'new' property attribute
-            Assert.NotNull(xml.Element("HiddenName"));
-            Assert.Equal("HiddenValue", xml.Element("HiddenName").Value);
+            XElement? hiddenName = xml.Element("HiddenName");
+            Assert.NotNull(hiddenName);
+            Assert.Equal("HiddenValue", hiddenName.Value);
             
             // Should NOT use the base class attribute name
             Assert.Null(xml.Element("BaseName"));

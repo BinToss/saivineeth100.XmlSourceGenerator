@@ -11,7 +11,7 @@ namespace XmlSourceGenerator.Tests.Integration
     public partial class BasicUser
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public double Balance { get; set; }
         public bool IsActive { get; set; }
         public byte? OptionalAge { get; set; }

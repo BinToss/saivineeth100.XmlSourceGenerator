@@ -6,7 +6,7 @@ namespace Reproduction
     public class SimpleItem
     {
         public int Value { get; set; }
-        public string Text { get; set; }
+        public string? Text { get; set; }
         public byte Byte { get; set; }
         public sbyte SByte { get; set; }
     }
