@@ -210,7 +210,7 @@ You may also set `<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>`
 
 **Generated File Pattern:**
 
-```
+```txt
 {ClassName}_XmlGenerated.g.cs
 ```
 
