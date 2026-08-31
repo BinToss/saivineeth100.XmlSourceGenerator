@@ -90,7 +90,7 @@ public class XmlSerializationOptionsTests
         var type = typeof(string);
         var propName = "TestProp";
 
-        var mappings = new List<(Type, string)>
+        var mappings = new List<XmlPropertySettings.PolymorphicMapping>
         {
             (typeof(int), "IntVal"),
             (typeof(bool), "BoolVal")

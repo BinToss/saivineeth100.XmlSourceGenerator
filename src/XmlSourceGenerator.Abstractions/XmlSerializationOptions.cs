@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+using static XmlSourceGenerator.Abstractions.XmlPropertySettings;
+
 namespace XmlSourceGenerator.Abstractions
 {
     /// <summary>
@@ -111,7 +114,17 @@ namespace XmlSourceGenerator.Abstractions
         /// <summary>
         /// Helper to get polymorphic mappings for a property.
         /// </summary>
-        public List<(Type Type, string Name)>? GetPolymorphicMappings(Type type, string propertyName)
+        /// <returns>A Dictionary-like <see cref="List{T}"/> where <c>T</c> is
+        /// <see cref="PolymorphicMapping"><c>PolymorphicMapping</c></see> or an equivalent tuple. The
+        /// <c>Type</c> in the polymorphic mapping must satisfy <see
+        /// cref="DynamicallyAccessedMemberTypes.PublicParameterlessConstructor"/>
+        /// so it can be safely passed to <see
+        /// cref="Activator.CreateInstance(Type)"/>.</returns>
+        public List<PolymorphicMapping>? GetPolymorphicMappings(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+            Type type,
+            string propertyName
+        )
         {
             if (PropertySettings.TryGetValue((type, propertyName), out var settings))
             {
