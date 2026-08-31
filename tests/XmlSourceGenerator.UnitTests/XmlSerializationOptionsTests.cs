@@ -39,7 +39,7 @@ public class XmlSerializationOptionsTests
         };
         var type = typeof(string);
         var propName = "TestProp";
-        var defaultName = "DefaultName";
+        // var defaultName = "DefaultName";
 
         options.PropertySettings.Add((type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
 
@@ -57,7 +57,7 @@ public class XmlSerializationOptionsTests
         };
         var type = typeof(string);
         var propName = "TestProp";
-        var defaultName = "DefaultName";
+        // var defaultName = "DefaultName";
 
         options.PropertySettings.Add((type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
 
