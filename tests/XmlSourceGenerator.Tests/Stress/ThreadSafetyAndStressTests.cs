@@ -1,12 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Xunit;
 using FluentAssertions;
-using XmlSourceGenerator;
-using XmlSourceGenerator.Abstractions;
 
 namespace XmlSourceGenerator.Tests.Stress
 {

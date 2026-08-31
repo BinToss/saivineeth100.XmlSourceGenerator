@@ -1,5 +1,3 @@
-using System;
-using Xunit;
 using XmlSourceGenerator.Abstractions;
 
 namespace XmlSourceGenerator.Tests.Unit

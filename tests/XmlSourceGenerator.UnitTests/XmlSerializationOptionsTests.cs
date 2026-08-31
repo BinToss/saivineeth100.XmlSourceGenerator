@@ -1,4 +1,3 @@
-using FluentAssertions;
 using XmlSourceGenerator.Abstractions;
 
 namespace XmlSourceGenerator.UnitTests;

@@ -1,6 +1,3 @@
-using FluentAssertions;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using XmlSourceGenerator.Abstractions;
 using XmlSourceGenerator.Helpers;
 using XmlSourceGenerator.Models;

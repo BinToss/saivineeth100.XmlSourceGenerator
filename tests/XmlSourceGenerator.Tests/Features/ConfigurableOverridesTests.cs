@@ -1,8 +1,4 @@
-using Xunit;
-using XmlSourceGenerator;
-using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
+using FluentAssertions;
 using XmlSourceGenerator.Abstractions;
 using FluentAssertions;
 

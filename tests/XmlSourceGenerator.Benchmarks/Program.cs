@@ -1,9 +1,7 @@
+using System.Xml.Linq;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
-using XmlSourceGenerator;
 using XmlSourceGenerator.Abstractions;
-using System.Collections.Generic;
-using System.Xml.Linq;
 
 namespace XmlSourceGenerator.Benchmarks
 {

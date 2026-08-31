@@ -1,5 +1,4 @@
 using Microsoft.CodeAnalysis;
-using XmlSourceGenerator.Helpers;
 using XmlSourceGenerator.Models;
 
 namespace XmlSourceGenerator.Generators

@@ -1,7 +1,3 @@
-using System;
-using Xunit;
-using XmlSourceGenerator;
-
 namespace XmlSourceGenerator.Tests.Unit
 {
     public class IndentedStringBuilderTests

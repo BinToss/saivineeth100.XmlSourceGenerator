@@ -1,4 +1,3 @@
-using FluentAssertions;
 using XmlSourceGenerator.UnitTests.Helpers;
 
 namespace XmlSourceGenerator.UnitTests.SourceGeneration;
