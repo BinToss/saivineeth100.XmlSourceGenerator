@@ -264,7 +264,7 @@ namespace XmlSourceGenerator.Generators
                                 {
                                     _sb.AppendLine($"var nilElement = new XElement({xmlNameVar});");
                                 }
-                                _sb.AppendLine("nilElement.Add(new XAttribute(XNamespace.Get(\"http://www.w3.org/2001/XMLSchema-instance\") + \"nil\", \"true\"));");
+                                _sb.AppendLine("nilElement.Add(new XAttribute(XNamespace.Get(\"http://www.w3.org/2001/XMLSchema-instance\") + \"nil\", \"true\"));"); // DevSkim: ignore DS137138
                                 _sb.AppendLine("element.Add(nilElement);");
                             }
                             _sb.AppendLine("}");
@@ -333,7 +333,7 @@ namespace XmlSourceGenerator.Generators
                                 {
                                     _sb.AppendLine($"var nilElement = new XElement({xmlNameVar});");
                                 }
-                                _sb.AppendLine("nilElement.Add(new XAttribute(XNamespace.Get(\"http://www.w3.org/2001/XMLSchema-instance\") + \"nil\", \"true\"));");
+                                _sb.AppendLine("nilElement.Add(new XAttribute(XNamespace.Get(\"http://www.w3.org/2001/XMLSchema-instance\") + \"nil\", \"true\"));"); // DevSkim: ignore DS137138
                                 _sb.AppendLine("element.Add(nilElement);");
                             }
                             _sb.AppendLine("}");

@@ -63,7 +63,7 @@ public class XmlNamespaceHelperTests
         var ns = XmlNamespaceHelper.GetNamespace(typeSymbol!);
 
         // Assert
-        ns.Should().Be("http://example.com");
+        ns.Should().Be("http://example.com"); // DevSkim: ignore DS137138
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public class XmlNamespaceHelperTests
         var ns = XmlNamespaceHelper.GetNamespace(typeSymbol!);
 
         // Assert
-        ns.Should().Be("http://type.example.com");
+        ns.Should().Be("http://type.example.com"); // DevSkim: ignore DS137138
     }
 
     [Fact]
@@ -111,7 +111,7 @@ public class XmlNamespaceHelperTests
         var ns = XmlNamespaceHelper.GetNamespace(property!);
 
         // Assert
-        ns.Should().Be("http://element.example.com");
+        ns.Should().Be("http://element.example.com"); // DevSkim: ignore DS137138
     }
 
     [Fact]
@@ -138,7 +138,7 @@ public class XmlNamespaceHelperTests
         var ns = XmlNamespaceHelper.GetNamespace(property!);
 
         // Assert
-        ns.Should().Be("http://attr.example.com");
+        ns.Should().Be("http://attr.example.com"); // DevSkim: ignore DS137138
     }
 
     [Fact]
@@ -165,6 +165,6 @@ public class XmlNamespaceHelperTests
         var ns = XmlNamespaceHelper.GetNamespace(property!);
 
         // Assert
-        ns.Should().Be("http://array.example.com");
+        ns.Should().Be("http://array.example.com"); // DevSkim: ignore DS137138
     }
 }
