@@ -47,7 +47,7 @@ namespace XmlSourceGenerator.Tests.Integration
 
             Assert.Equal(1001, voucher.VoucherNumber);
             Assert.Equal(2, voucher.LedgerEntries.Count);
-            
+
             Assert.IsType<AllLedgerEntry>(voucher.LedgerEntries[0]);
             Assert.Equal("Sales", voucher.LedgerEntries[0].LedgerName);
             Assert.Equal(5000.0, ((AllLedgerEntry)voucher.LedgerEntries[0]).Amount);

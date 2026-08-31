@@ -52,7 +52,7 @@ namespace XmlSourceGenerator.Tests.Integration
             XElement? overriddenName = xml.Element("OverriddenName");
             Assert.NotNull(overriddenName);
             Assert.Equal("TestName", overriddenName.Value);
-            
+
             // Should NOT use the base class attribute name
             Assert.Null(xml.Element("BaseName"));
         }
@@ -86,7 +86,7 @@ namespace XmlSourceGenerator.Tests.Integration
             XElement? hiddenName = xml.Element("HiddenName");
             Assert.NotNull(hiddenName);
             Assert.Equal("HiddenValue", hiddenName.Value);
-            
+
             // Should NOT use the base class attribute name
             Assert.Null(xml.Element("BaseName"));
         }

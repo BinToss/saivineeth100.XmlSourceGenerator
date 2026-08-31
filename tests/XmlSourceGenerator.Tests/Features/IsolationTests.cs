@@ -48,7 +48,7 @@ namespace XmlSourceGenerator.Tests.Integration
             Assert.NotNull(firstName);
             Assert.NotNull(xml.Element("userAge"));
             Assert.NotNull(xml.Element("isActiveUser"));
-            
+
             Assert.Equal("John", firstName.Value);
         }
 
@@ -73,7 +73,7 @@ namespace XmlSourceGenerator.Tests.Integration
             Assert.NotNull(firstName);
             Assert.NotNull(xml.Element("user_age"));
             Assert.NotNull(xml.Element("is_active_user"));
-            
+
             Assert.Equal("John", firstName.Value);
         }
 
@@ -106,11 +106,11 @@ namespace XmlSourceGenerator.Tests.Integration
             // Test with different boolean casing and numeric formatting if supported by XElement casting
             // XElement casting to bool supports "true"/"false" (case sensitive? actually XML standard is lowercase, but .NET might be flexible)
             // Let's verify standard XML behavior.
-            
+
             var xml = new XElement("PrimitivesEntity",
                 new XElement("IntValue", "-1"),
                 new XElement("DoubleValue", "-0.001"),
-                new XElement("BoolValue", "false"), 
+                new XElement("BoolValue", "false"),
                 new XElement("DecimalValue", "0"),
                 new XElement("FloatValue", "0"),
                 new XElement("LongValue", "0")

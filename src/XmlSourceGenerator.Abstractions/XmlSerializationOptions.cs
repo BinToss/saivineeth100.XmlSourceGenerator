@@ -10,7 +10,7 @@ namespace XmlSourceGenerator.Abstractions
         /// Default is false (minified).
         /// </summary>
         public bool WriteIndented { get; set; } = false;
-        
+
         /// <summary>
         /// Gets or sets the encoding to use for XML output.
         /// Default is UTF-8 if null.

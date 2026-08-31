@@ -95,7 +95,7 @@ namespace XmlSourceGenerator.Generators
             string newModifier = isNew ? "new " : "";
             _sb.AppendLine($"public {newModifier} XElement WriteToXml(XmlSerializationOptions? options = null)");
             _sb.AppendLine("{");
-            
+
             using (_sb.Indent())
             {
                 if (rootNs != null)
@@ -108,7 +108,7 @@ namespace XmlSourceGenerator.Generators
                     _sb.AppendLine($"var element = new XElement(DefaultXmlRootElementName);");
                 }
 
-                // Sort properties: 
+                // Sort properties:
                 // 1. Order >= 0, sorted by Order
                 // 2. Order < 0 (default), sorted by declaration order (original list order)
                 var sortedProperties = properties
@@ -134,7 +134,7 @@ namespace XmlSourceGenerator.Generators
                             _sb.AppendLine("{");
                             using (_sb.Indent())
                             {
-                                // Assuming item is XElement or XmlElement. 
+                                // Assuming item is XElement or XmlElement.
                                 // Since we use XElement internally, we expect XElement or conversion.
                                 // If the property type is List<XmlElement>, we might need conversion.
                                 // For now, assuming List<XElement> or compatible.

@@ -117,7 +117,7 @@ namespace XmlSourceGenerator.Generators
                                 _sb.AppendLine("}");
                                 _sb.AppendLine("else");
                                 _sb.AppendLine("{");
-                                _sb.AppendLine($"    ReflectionHelper.Populate({propName}, polyElem_{propName}, options);"); 
+                                _sb.AppendLine($"    ReflectionHelper.Populate({propName}, polyElem_{propName}, options);");
                                 _sb.AppendLine("}");
                                 _sb.AppendLine("break;");
                             }
@@ -150,13 +150,13 @@ namespace XmlSourceGenerator.Generators
                 }
                 else if (info.TypeInfo.Kind == PropertyKind.XElement)
                 {
-                     _sb.AppendLine($"if (elem_{propName} != null)");
-                     _sb.AppendLine("{");
-                     using (_sb.Indent())
-                     {
-                         _sb.AppendLine($"{propName} = elem_{propName};");
-                     }
-                     _sb.AppendLine("}");
+                    _sb.AppendLine($"if (elem_{propName} != null)");
+                    _sb.AppendLine("{");
+                    using (_sb.Indent())
+                    {
+                        _sb.AppendLine($"{propName} = elem_{propName};");
+                    }
+                    _sb.AppendLine("}");
                 }
                 else
                 {
@@ -279,21 +279,21 @@ namespace XmlSourceGenerator.Generators
                     // Generate switch for enum write
                     // If nullable, we need to handle value access
                     string valAccess = isReferenceOrNullable ? $"{propName}.Value" : propName;
-                    
+
                     // Note: If nullable, we only reach here if propName != null (checked above if we wrap it similarly? Wait, enum logic below didn't have null check wrapper yet for value access in switch?)
                     // The standard block above handles Primitive/DateTime null checks. Enum was separate.
                     // We need to wrap Enum in null check if nullable.
-                    
+
                     if (isReferenceOrNullable)
                     {
-                         _sb.AppendLine($"if ({propName} != null)");
-                         _sb.AppendLine("{");
+                        _sb.AppendLine($"if ({propName} != null)");
+                        _sb.AppendLine("{");
                     }
 
                     using (isReferenceOrNullable ? _sb.Indent() : null)
                     {
                         _sb.AppendLine($"string enumValue_{propName} = {valAccess}.ToString();");
-    
+
                         var enumMap = info.TypeInfo.EnumMapping;
                         if (enumMap.Any(kvp => kvp.Key != kvp.Value))
                         {
@@ -308,14 +308,14 @@ namespace XmlSourceGenerator.Generators
                             }
                             _sb.AppendLine("}");
                         }
-    
+
                         string enumElementCreation = ns != null
                             ? $"new XElement(ns_{propName} + {xmlNameVar}, enumValue_{propName})"
                             : $"new XElement({xmlNameVar}, enumValue_{propName})";
-    
+
                         _sb.AppendLine($"element.Add({enumElementCreation});");
                     }
-                    
+
                     if (isReferenceOrNullable)
                     {
                         _sb.AppendLine("}");
@@ -341,7 +341,7 @@ namespace XmlSourceGenerator.Generators
                         }
                     }
                 }
-                
+
                 else if (info.TypeInfo.Kind == PropertyKind.XElement)
                 {
                     _sb.AppendLine($"if ({propName} != null)");
@@ -350,16 +350,16 @@ namespace XmlSourceGenerator.Generators
                     {
                         if (ns != null)
                         {
-                             _sb.AppendLine($"{propName}.Name = XNamespace.Get(\"{ns}\") + {xmlNameVar};");
-                             _sb.AppendLine($"element.Add({propName});");
+                            _sb.AppendLine($"{propName}.Name = XNamespace.Get(\"{ns}\") + {xmlNameVar};");
+                            _sb.AppendLine($"element.Add({propName});");
                         }
                         else
                         {
-                             _sb.AppendLine($"{propName}.Name = {xmlNameVar};");
-                             _sb.AppendLine($"element.Add({propName});");
+                            _sb.AppendLine($"{propName}.Name = {xmlNameVar};");
+                            _sb.AppendLine($"element.Add({propName});");
                         }
                     }
-                     _sb.AppendLine("}");
+                    _sb.AppendLine("}");
                 }
                 else
                 {
@@ -419,7 +419,7 @@ namespace XmlSourceGenerator.Generators
                             _sb.AppendLine("}");
                         }
                         _sb.AppendLine("}");
-                        
+
                         // Check for compile-time polymorphic mappings (from [XmlInclude] on property type)
                         if (info.IsPolymorphic && info.PolymorphicMappings.Count > 0)
                         {
@@ -519,7 +519,7 @@ namespace XmlSourceGenerator.Generators
                 _sb.AppendLine($"var child_{propName} = ReflectionHelper.Serialize({propName}, options, {xmlNameVar});");
                 if (ns != null)
                 {
-                     _sb.AppendLine($"if (child_{propName} != null) child_{propName}.Name = ns_{propName} + {xmlNameVar};");
+                    _sb.AppendLine($"if (child_{propName} != null) child_{propName}.Name = ns_{propName} + {xmlNameVar};");
                 }
                 _sb.AppendLine($"if (child_{propName} != null) element.Add(child_{propName});");
             }
@@ -529,7 +529,7 @@ namespace XmlSourceGenerator.Generators
         {
             string propName = info.Name;
             string typeName = info.TypeName;
-           // _sb.AppendLine($"//{propName} = {info.PropertyKind};");
+            // _sb.AppendLine($"//{propName} = {info.PropertyKind};");
             if (info.TypeInfo.Kind == PropertyKind.Primitive)
             {
                 if (info.TypeInfo.IsString)
@@ -548,7 +548,7 @@ namespace XmlSourceGenerator.Generators
                 }
                 else
                 {
-                    // For nullable primitives, explicit cast (int?)element works if strictly element, 
+                    // For nullable primitives, explicit cast (int?)element works if strictly element,
                     // but sourceVariable might be attribute too. XAttribute explicit cast works too.
                     _sb.AppendLine($"{propName} = ({typeName}){sourceVariable};");
                 }
@@ -559,7 +559,7 @@ namespace XmlSourceGenerator.Generators
                 // Invert map
                 var reverseMap = info.TypeInfo.EnumMapping.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
                 string underlyingTypeName = info.TypeInfo.FullName;
-                
+
                 if (reverseMap.Any(kvp => kvp.Key != kvp.Value))
                 {
                     _sb.AppendLine($"switch ({sourceVariable}.Value)");

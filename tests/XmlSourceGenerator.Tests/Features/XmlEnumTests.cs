@@ -28,28 +28,28 @@ namespace XmlSourceGenerator.Tests.Integration.Features
         [Fact]
         public void XmlEnum_SerializesWithCustomValue_Active()
         {
-            var account = new UserAccount 
-            { 
+            var account = new UserAccount
+            {
                 Username = "john",
-                AccountStatus = Status.Active 
+                AccountStatus = Status.Active
             };
-            
+
             var xml = account.WriteToXml();
-            
+
             Assert.Equal("active", xml.Element("AccountStatus")?.Value);
         }
 
         [Fact]
         public void XmlEnum_SerializesWithCustomValue_Inactive()
         {
-            var account = new UserAccount 
-            { 
+            var account = new UserAccount
+            {
                 Username = "jane",
                 AccountStatus = Status.Inactive
             };
-            
+
             var xml = account.WriteToXml();
-            
+
             Assert.Equal("inactive", xml.Element("AccountStatus")?.Value);
         }
 
@@ -86,12 +86,12 @@ namespace XmlSourceGenerator.Tests.Integration.Features
         [Fact]
         public void XmlEnum_RoundTrip_PreservesCustomValues()
         {
-            var original = new UserAccount 
-            { 
+            var original = new UserAccount
+            {
                 Username = "test",
                 AccountStatus = Status.Inactive
             };
-            
+
             var xml = original.WriteToXml();
             var deserialized = new UserAccount();
             deserialized.ReadFromXml(xml);

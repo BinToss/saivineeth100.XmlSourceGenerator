@@ -87,7 +87,7 @@ namespace XmlSourceGenerator.Abstractions
                 {
                     if (IsSimpleType(prop.PropertyType))
                     {
-                        try 
+                        try
                         {
                             object? val = ConvertValue(childEl.Value, prop.UnderlyingType);
                             prop.Property.SetValue(item, val);
@@ -111,7 +111,7 @@ namespace XmlSourceGenerator.Abstractions
                     var attr = element.Attribute(prop.Name);
                     if (attr != null && IsSimpleType(prop.PropertyType))
                     {
-                        try 
+                        try
                         {
                             object? val = ConvertValue(attr.Value, prop.UnderlyingType);
                             prop.Property.SetValue(item, val);
@@ -151,18 +151,18 @@ namespace XmlSourceGenerator.Abstractions
 
         private static object? ConvertValue(string value, Type type)
         {
-             if (type == typeof(DateTime)) return DateTime.Parse(value);
-             if (type == typeof(bool)) return XmlConvert.ToBoolean(value);
-             if (type.IsEnum) return Enum.Parse(type, value);
-             
-             // Dynamic parse for DateOnly/TimeOnly
-             if (type.Name == "DateOnly" || type.Name == "TimeOnly")
-             {
-                 var parseMethod = type.GetMethod("Parse", new[] { typeof(string) });
-                 if (parseMethod != null) return parseMethod.Invoke(null, new object[] { value });
-             }
+            if (type == typeof(DateTime)) return DateTime.Parse(value);
+            if (type == typeof(bool)) return XmlConvert.ToBoolean(value);
+            if (type.IsEnum) return Enum.Parse(type, value);
 
-             return Convert.ChangeType(value, type, System.Globalization.CultureInfo.InvariantCulture);
+            // Dynamic parse for DateOnly/TimeOnly
+            if (type.Name == "DateOnly" || type.Name == "TimeOnly")
+            {
+                var parseMethod = type.GetMethod("Parse", new[] { typeof(string) });
+                if (parseMethod != null) return parseMethod.Invoke(null, new object[] { value });
+            }
+
+            return Convert.ChangeType(value, type, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public static XmlTypeMetadata GetCachedMetadata(Type type)
@@ -184,9 +184,9 @@ namespace XmlSourceGenerator.Abstractions
                 var rootAttr = type.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().Name == nameof(XmlRootAttribute));
                 if (rootAttr != null)
                 {
-                     var nameProp = rootAttr.GetType().GetProperty("ElementName");
-                     var val = nameProp?.GetValue(rootAttr) as string;
-                     if (!string.IsNullOrEmpty(val)) RootName = val!;
+                    var nameProp = rootAttr.GetType().GetProperty("ElementName");
+                    var val = nameProp?.GetValue(rootAttr) as string;
+                    if (!string.IsNullOrEmpty(val)) RootName = val!;
                 }
 
                 Properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)

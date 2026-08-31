@@ -36,19 +36,19 @@ namespace XmlSourceGenerator.Tests.Features
                 DerivedProp = "Derived"
             };
 
-            // DerivedNoGen doesn't have WriteToXml, so we cast to base or use wrapper if we could, 
+            // DerivedNoGen doesn't have WriteToXml, so we cast to base or use wrapper if we could,
             // but normally we use it in a container or via extension if generated?
-            // Wait, if it's not generated, it doesn't have the method. 
+            // Wait, if it's not generated, it doesn't have the method.
             // So we can't call item.WriteToXml() directly unless we cast to GenBase (if GenBase has it).
             // GenBase has it.
-            
+
             var xml = ((GenBase)item).WriteToXml();
-            
+
             // Current behavior (Bug): DerivedProp is missing because GenBase.WriteToXml doesn't know about it.
             Assert.Equal("Base", xml.Element("BaseProp")?.Value);
-            
+
             // This is the data loss:
-            Assert.Null(xml.Element("DerivedProp")); 
+            Assert.Null(xml.Element("DerivedProp"));
         }
 
         [Fact]
@@ -64,11 +64,11 @@ namespace XmlSourceGenerator.Tests.Features
             };
 
             var xml = container.WriteToXml();
-            
+
             var inner = xml.Element("Inner");
             Assert.NotNull(inner);
             Assert.Equal("Base", inner.Element("BaseProp")?.Value);
-            
+
             // This is the data loss:
             Assert.Null(inner.Element("DerivedProp"));
         }

@@ -11,7 +11,7 @@ public class XmlNamespaceHelperTests
     private static Compilation CreateCompilation(string source)
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(source);
-        
+
         var coreAssemblies = AppDomain.CurrentDomain.GetAssemblies()
             .Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
             .Select(a => MetadataReference.CreateFromFile(a.Location))
@@ -52,7 +52,7 @@ public class XmlNamespaceHelperTests
         // Arrange
         var source = @"
             using System.Xml.Serialization;
-            
+
             namespace Test
             {
                 [XmlRoot(Namespace = ""http://example.com"")]
@@ -75,7 +75,7 @@ public class XmlNamespaceHelperTests
         // Arrange
         var source = @"
             using System.Xml.Serialization;
-            
+
             namespace Test
             {
                 [XmlType(""CustomType"", Namespace = ""http://type.example.com"")]
@@ -96,7 +96,7 @@ public class XmlNamespaceHelperTests
         // Arrange
         var source = @"
             using System.Xml.Serialization;
-            
+
             namespace Test
             {
                 public class Container
@@ -123,7 +123,7 @@ public class XmlNamespaceHelperTests
         // Arrange
         var source = @"
             using System.Xml.Serialization;
-            
+
             namespace Test
             {
                 public class Container
@@ -150,7 +150,7 @@ public class XmlNamespaceHelperTests
         // Arrange
         var source = @"
             using System.Xml.Serialization;
-            
+
             namespace Test
             {
                 public class Container

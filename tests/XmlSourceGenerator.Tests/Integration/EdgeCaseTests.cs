@@ -36,7 +36,7 @@ namespace XmlSourceGenerator.Tests.Integration
                 new XElement("Count", 5));
 
             var entity = new EdgeCaseEntity();
-            
+
             // Should not throw
             entity.ReadFromXml(xml);
 
@@ -70,7 +70,7 @@ namespace XmlSourceGenerator.Tests.Integration
 
             // Null string should not be written
             Assert.Null(xml.Element("Name"));
-            
+
             // Default int (0) should be written
             Assert.Equal("0", xml.Element("Count")?.Value);
         }

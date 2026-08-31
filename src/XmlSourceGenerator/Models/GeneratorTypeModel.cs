@@ -13,7 +13,7 @@ namespace XmlSourceGenerator.Models
         public bool ImplementsIXmlStreamable { get; set; }
         public Dictionary<string, string> EnumMapping { get; set; } = new Dictionary<string, string>();
         public PropertyKind Kind { get; set; }
-        
+
         public GeneratorPropertyModel[] Properties { get; set; } = [];
 
         public GeneratorTypeModel(string name, string ns, string fullName, bool isEnum, bool isReferenceType, bool isString)
@@ -26,7 +26,7 @@ namespace XmlSourceGenerator.Models
             IsString = isString;
         }
 
-        public GeneratorTypeModel() 
+        public GeneratorTypeModel()
         {
             Name = string.Empty;
             Namespace = string.Empty;

@@ -61,7 +61,7 @@ namespace XmlSourceGenerator.Generators
             string newModifier = isNew ? "new " : "";
             _sb.AppendLine($"public {newModifier}void ReadFromXml(XElement element, XmlSerializationOptions? options = null)");
             _sb.AppendLine("{");
-            
+
             using (_sb.Indent())
             {
                 var knownElements = new System.Collections.Generic.HashSet<string>();
@@ -101,7 +101,7 @@ namespace XmlSourceGenerator.Generators
                         }
                         else
                         {
-                            knownElements.Add(info.Name); 
+                            knownElements.Add(info.Name);
                         }
                     }
                 }
@@ -206,11 +206,11 @@ namespace XmlSourceGenerator.Generators
                             _sb.AppendLine($"var {varName} = new {mapping.TargetTypeName}();");
                             if (mapping.ImplementsIXmlStreamable)
                             {
-                                 _sb.AppendLine($"if ({varName} is IXmlStreamable {streamableVarName}) {streamableVarName}.ReadFromXml(child, options);");
+                                _sb.AppendLine($"if ({varName} is IXmlStreamable {streamableVarName}) {streamableVarName}.ReadFromXml(child, options);");
                             }
                             else
                             {
-                                 _sb.AppendLine($"{varName} = ReflectionHelper.Deserialize<{mapping.TargetTypeName}>(child, options);");
+                                _sb.AppendLine($"{varName} = ReflectionHelper.Deserialize<{mapping.TargetTypeName}>(child, options);");
                             }
                             _sb.AppendLine($"{info.Name}.Add({varName});");
                             _sb.AppendLine("break;");

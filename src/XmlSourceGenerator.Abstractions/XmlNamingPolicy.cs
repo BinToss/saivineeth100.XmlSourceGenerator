@@ -33,7 +33,7 @@ namespace XmlSourceGenerator.Abstractions
                 return name;
 
             char[] chars = name.ToCharArray();
-            
+
             for (int i = 0; i < chars.Length; i++)
             {
                 if (i == 1 && !char.IsUpper(chars[i]))
@@ -44,7 +44,7 @@ namespace XmlSourceGenerator.Abstractions
                 bool hasNext = (i + 1 < chars.Length);
                 if (i > 0 && hasNext && !char.IsUpper(chars[i + 1]))
                 {
-                    // if the next character is a space, which is not considered uppercase 
+                    // if the next character is a space, which is not considered uppercase
                     // (otherwise we wouldn't be here...)
                     // we want to ensure that the following:
                     // 'FOOBar' is rewritten as 'fooBar', and not as 'foOBar'

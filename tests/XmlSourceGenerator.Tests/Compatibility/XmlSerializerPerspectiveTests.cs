@@ -46,12 +46,12 @@ namespace XmlSourceGenerator.Tests.Integration
 
             var elements = xml.Elements().ToList();
             Assert.Equal(2, elements.Count);
-            
+
             // Current implementation: Derived properties come FIRST because GetAllProperties iterates Derived -> Base.
             // If we want to match XmlSerializer, we might need to reverse.
             // For now, let's assert the CURRENT behavior to document it.
             // If the user wants XmlSerializer behavior strictly, I will need to change the generator.
-            
+
             Assert.Equal("BaseId", elements[0].Name.LocalName);
             Assert.Equal("DerivedProp", elements[1].Name.LocalName);
         }
