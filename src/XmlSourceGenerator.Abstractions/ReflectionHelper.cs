@@ -93,6 +93,10 @@ namespace XmlSourceGenerator.Abstractions
                     }
                     else
                     {
+                        // deserializing to `dynamic` has runtime errors
+                        // var val2 = ReflectionHelper.Deserialize<dynamic>(childEl, options);
+                        // prop.Property.SetValue(item, val2);
+
                         // Recursive deserialization
                         // For nested properties, we normally create new instances.
                         // We use Deserialize<T> via reflection because we need to know the type to create.
