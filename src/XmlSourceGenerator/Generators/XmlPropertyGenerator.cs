@@ -108,6 +108,12 @@ namespace XmlSourceGenerator.Generators
                             _sb.AppendLine("{");
                             using (_sb.Indent())
                             {
+#if DEBUG
+                                if (info.IsPolymorphic)
+                                    _sb.AppendLine("// IsPolymorphic");
+                                else
+                                    _sb.AppendLine($"// !IsPolymorphic; That can't be right! {info.PolymorphicMappings.Count} mappings!");
+#endif
                                 // Instantiate type dynamically
                                 _sb.AppendLine($"{propName} = ({typeName})Activator.CreateInstance(mapping.Type);");
                                 _sb.AppendLine($"if ({propName} is IXmlStreamable streamable_{propName})");
