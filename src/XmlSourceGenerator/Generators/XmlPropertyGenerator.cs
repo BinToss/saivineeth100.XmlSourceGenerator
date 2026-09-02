@@ -65,7 +65,7 @@ namespace XmlSourceGenerator.Generators
                     using (_sb.Indent())
                     {
                         _sb.AppendLine($"var override_{propName} = options.GetOverride(typeof({className}), \"{propName}\");");
-                        _sb.AppendLine($"if (!string.IsNullOrEmpty(override_{propName})) {xmlNameVar} = override_{propName};");
+                        _sb.AppendLine($"if (!string.IsNullOrEmpty(override_{propName})) {xmlNameVar} = override_{propName}!;");
                     }
                     _sb.AppendLine("}");
                 }
@@ -115,10 +115,10 @@ namespace XmlSourceGenerator.Generators
                                     _sb.AppendLine($"// !IsPolymorphic; That can't be right! {info.PolymorphicMappings.Count} mappings!");
 #endif
                                 // Instantiate type dynamically
-                                if (info.TypeInfo.IsNullableAnnotated)
+                                if (info.TypeInfo.IsNullableAnnotated || info.TypeInfo.Name == nameof(Nullable))
                                     _sb.AppendLine($"{propName} = ({typeName}?)Activator.CreateInstance(mapping.Type);");
                                 else
-                                    _sb.AppendLine($"{propName} = ({typeName})Activator.CreateInstance(mapping.Type);");
+                                    _sb.AppendLine($"{propName} = ({typeName})Activator.CreateInstance(mapping.Type)!;");
                                 _sb.AppendLine($"if ({propName} is IXmlStreamable streamable_{propName})");
                                 _sb.AppendLine("{");
                                 _sb.AppendLine($"    streamable_{propName}.ReadFromXml(polyElem_{propName}, options);");
@@ -227,7 +227,7 @@ namespace XmlSourceGenerator.Generators
                     using (_sb.Indent())
                     {
                         _sb.AppendLine($"var override_{propName} = options.GetOverride(typeof({className}), \"{propName}\");");
-                        _sb.AppendLine($"if (!string.IsNullOrEmpty(override_{propName})) {xmlNameVar} = override_{propName};");
+                        _sb.AppendLine($"if (!string.IsNullOrEmpty(override_{propName})) {xmlNameVar} = override_{propName}!;");
                     }
                     _sb.AppendLine("}");
                 }
