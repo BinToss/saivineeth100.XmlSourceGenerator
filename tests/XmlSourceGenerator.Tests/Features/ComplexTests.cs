@@ -68,7 +68,7 @@ namespace XmlSourceGenerator.Tests.Integration
             // So [XmlElement] wins over Options. Let's verify.
 
             var options = new XmlSerializationOptions();
-            options.PropertyOverrides[(typeof(OverrideEntity), "OriginalName")] = "OptionName";
+            options.PropertyOverrides[new(typeof(OverrideEntity), "OriginalName")] = "OptionName";
 
             var entity = new OverrideEntity { OriginalName = "Test", Identifier = 1 };
             var xml = entity.WriteToXml(options);

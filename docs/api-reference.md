@@ -46,9 +46,23 @@ public class XmlSerializationOptions
 {
     public XmlNamingPolicy? PropertyNamingPolicy { get; set; }
     public bool WriteIndented { get; set; }
-    public Dictionary<(Type Type, string PropertyName), string> PropertyOverrides { get; }
+    public Dictionary<PolymorphicMapping, string> PropertyOverrides { get; }
 
-    public string? GetXmlName(Type type, string propertyName);
+    public string? GetXmlName(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+        Type type,
+        string propertyName
+    );
+    public string? GetOverride(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+        Type type,
+        string propertyName
+    );
+    public List<PolymorphicMapping>? GetPolymorphicMappings(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+        Type type,
+        string propertyName
+    );
 }
 ```
 

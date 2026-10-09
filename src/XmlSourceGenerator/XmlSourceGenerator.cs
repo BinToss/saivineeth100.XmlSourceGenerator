@@ -98,6 +98,7 @@ namespace XmlSourceGenerator
             sb.AppendLine();
             sb.AppendLine($"using {Constants.SystemNamespace};");
             sb.AppendLine($"using {Constants.SystemCollectionsGenericNamespace};");
+            sb.AppendLine($"using {Constants.SystemDiagnosticsCodeAnalysis};");
             sb.AppendLine($"using {Constants.SystemXmlLinqNamespace};");
             sb.AppendLine($"using {Constants.SystemGlobalizationNamespace};"); // For DateTime parsing
             sb.AppendLine($"using {Constants.AbstractionsNamespace};");
@@ -132,6 +133,7 @@ namespace XmlSourceGenerator
                     sb.AppendLine("{");
                     using (sb.Indent())
                     {
+                        sb.AppendLine("[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]");
                         sb.AppendLine($"public static readonly Type Type = typeof({classSymbol.ToDisplayString()});");
 
                         var members = PropertyHelpers.GetAllMembers(classSymbol);

@@ -71,7 +71,7 @@ namespace XmlSourceGenerator.Generators
                 }
                 else
                 {
-                    _sb.AppendLine($"var {xmlNameVar} = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_{propName}) ?? XmlTypeInfo.DefaultXmlName_{propName};");
+                    _sb.AppendLine($"var {xmlNameVar} = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_{propName})) ?? XmlTypeInfo.DefaultXmlName_{propName};");
                 }
 
                 if (ns != null)
@@ -233,7 +233,7 @@ namespace XmlSourceGenerator.Generators
                 }
                 else
                 {
-                    _sb.AppendLine($"var {xmlNameVar} = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_{propName}) ?? XmlTypeInfo.DefaultXmlName_{propName};");
+                    _sb.AppendLine($"var {xmlNameVar} = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_{propName})) ?? XmlTypeInfo.DefaultXmlName_{propName};");
                 }
 
                 string elementCreation;

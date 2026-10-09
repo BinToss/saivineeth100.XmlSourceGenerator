@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using static XmlSourceGenerator.Abstractions.XmlPropertySettings;
 
 namespace XmlSourceGenerator.Abstractions
 {
@@ -52,13 +51,13 @@ namespace XmlSourceGenerator.Abstractions
         /// Key: (Type of the class, Property Name)
         /// Value: The settings for that property
         /// </summary>
-        public Dictionary<(Type, string), XmlPropertySettings> PropertySettings { get; } = new Dictionary<(Type, string), XmlPropertySettings>();
+        public Dictionary<PolymorphicMapping, XmlPropertySettings> PropertySettings { get; } = [];
 
         /// <summary>
         /// Legacy dictionary for simple name overrides.
         /// Kept for backward compatibility, but PropertySettings is preferred.
         /// </summary>
-        public Dictionary<(Type, string), string> PropertyOverrides { get; } = new Dictionary<(Type, string), string>();
+        public Dictionary<PolymorphicMapping, string> PropertyOverrides { get; } = new Dictionary<PolymorphicMapping, string>();
 
         /// <summary>
         /// Resolves the XML element name for a given property.
@@ -68,42 +67,52 @@ namespace XmlSourceGenerator.Abstractions
         /// 3. PropertyNamingPolicy (if set)
         /// 4. Original Property Name
         /// </summary>
-        public string GetXmlName(Type type, string propertyName)
+        public string GetXmlName(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+            Type type,
+            string propertyName
+        ) => GetXmlName(new(type, propertyName));
+
+        public string GetXmlName(PolymorphicMapping polymorphicMapping)
         {
             // Check PropertySettings first
-            if (PropertySettings.TryGetValue((type, propertyName), out var settings) && !string.IsNullOrEmpty(settings.XmlName))
+            if (PropertySettings.TryGetValue(polymorphicMapping, out var settings) && !string.IsNullOrEmpty(settings.XmlName))
             {
                 return settings.XmlName!;
             }
 
             // Fallback to legacy overrides
-            if (PropertyOverrides.TryGetValue((type, propertyName), out string? overrideName))
+            if (PropertyOverrides.TryGetValue(polymorphicMapping, out string? overrideName))
             {
                 return overrideName;
             }
 
-            if (PropertyNamingPolicy != null && PropertyNamingPolicy.ConvertName(propertyName) is string s)
+            if (PropertyNamingPolicy != null && PropertyNamingPolicy.ConvertName(polymorphicMapping.Name) is string s)
             {
                 return s;
             }
 
-            return propertyName;
+            return polymorphicMapping.Name;
         }
 
         /// <summary>
         /// Helper to get the override name for a property, if any.
         /// Returns null if no override is configured.
         /// </summary>
-        public string? GetOverride(Type type, string propertyName)
+        public string? GetOverride(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+            Type type,
+            string propertyName
+        )
         {
             // Check PropertySettings first
-            if (PropertySettings.TryGetValue((type, propertyName), out var settings) && !string.IsNullOrEmpty(settings.XmlName))
+            if (PropertySettings.TryGetValue(new(type, propertyName), out var settings) && !string.IsNullOrEmpty(settings.XmlName))
             {
                 return settings.XmlName;
             }
 
             // Fallback to legacy overrides
-            if (PropertyOverrides.TryGetValue((type, propertyName), out string? overrideName))
+            if (PropertyOverrides.TryGetValue(new(type, propertyName), out string? overrideName))
             {
                 return overrideName;
             }
@@ -126,7 +135,7 @@ namespace XmlSourceGenerator.Abstractions
             string propertyName
         )
         {
-            if (PropertySettings.TryGetValue((type, propertyName), out var settings))
+            if (PropertySettings.TryGetValue(new(type, propertyName), out var settings))
             {
                 return settings.PolymorphicMappings;
             }

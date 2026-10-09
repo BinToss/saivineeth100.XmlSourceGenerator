@@ -37,6 +37,7 @@ namespace XmlSourceGenerator
         // Using Directives
         public const string SystemNamespace = "System";
         public const string SystemCollectionsGenericNamespace = "System.Collections.Generic";
+        public const string SystemDiagnosticsCodeAnalysis = "System.Diagnostics.CodeAnalysis";
         public const string SystemXmlLinqNamespace = "System.Xml.Linq";
         public const string SystemGlobalizationNamespace = "System.Globalization";
     }
