@@ -46,6 +46,11 @@ public class XmlSerializationOptions
 {
     public XmlNamingPolicy? PropertyNamingPolicy { get; set; }
     public bool WriteIndented { get; set; }
+    public System.Text.Encoding? Encoding { get; set; }
+    public XmlNamingPolicy? PropertyNamingPolicy { get; set; }
+    public bool PreferOptionsOverAttributes { get; set; }
+    public bool IgnoreParsingErrors { get; set; }
+    public bool IgnoreNullValues { get; set; }
     public Dictionary<PolymorphicMapping, string> PropertyOverrides { get; }
 
     public string? GetXmlName(
