@@ -46,7 +46,7 @@ namespace XmlSourceGenerator.Tests.Features
             };
 
             // Configure override using PropertySettings
-            options.PropertySettings.Add((typeof(ConfigurableItem), "Name"), new XmlPropertySettings
+            options.PropertySettings.Add(new(typeof(ConfigurableItem), "Name"), new XmlPropertySettings
             {
                 XmlName = "OverriddenName"
             });
@@ -75,7 +75,7 @@ namespace XmlSourceGenerator.Tests.Features
                 PreferOptionsOverAttributes = false // Default
             };
 
-            options.PropertySettings.Add((typeof(ConfigurableItem), "Name"), new XmlPropertySettings
+            options.PropertySettings.Add(new(typeof(ConfigurableItem), "Name"), new XmlPropertySettings
             {
                 XmlName = "OverriddenName"
             });
@@ -97,11 +97,11 @@ namespace XmlSourceGenerator.Tests.Features
             };
 
             // Configure polymorphic mappings dynamically
-            options.PropertySettings.Add((typeof(PolymorphicContainer), "Item"), new XmlPropertySettings
+            options.PropertySettings.Add(new(typeof(PolymorphicContainer), "Item"), new XmlPropertySettings
             {
                 PolymorphicMappings = [
-                    (typeof(DerivedA), "ItemA"),
-                    (typeof(DerivedB), "ItemB")
+                    new(typeof(DerivedA), "ItemA"),
+                    new(typeof(DerivedB), "ItemB")
                 ]
             });
 
@@ -131,11 +131,11 @@ namespace XmlSourceGenerator.Tests.Features
                 PreferOptionsOverAttributes = true
             };
 
-            options.PropertySettings.Add((typeof(PolymorphicContainer), "Item"), new XmlPropertySettings
+            options.PropertySettings.Add(new(typeof(PolymorphicContainer), "Item"), new XmlPropertySettings
             {
                 PolymorphicMappings = [
-                    (typeof(DerivedA), "ItemA"),
-                    (typeof(DerivedB), "ItemB")
+                    new(typeof(DerivedA), "ItemA"),
+                    new(typeof(DerivedB), "ItemB")
                 ]
             });
 

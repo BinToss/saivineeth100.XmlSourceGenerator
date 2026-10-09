@@ -8,7 +8,7 @@ namespace XmlSourceGenerator.Tests.Unit
         public void GetXmlName_WithOverride_ReturnsOverride()
         {
             var options = new XmlSerializationOptions();
-            options.PropertyOverrides[(typeof(TestClass), "PropertyName")] = "CustomName";
+            options.PropertyOverrides[new(typeof(TestClass), "PropertyName")] = "CustomName";
 
             var result = options.GetXmlName(typeof(TestClass), "PropertyName");
 
@@ -45,7 +45,7 @@ namespace XmlSourceGenerator.Tests.Unit
             {
                 PropertyNamingPolicy = XmlNamingPolicy.CamelCase
             };
-            options.PropertyOverrides[(typeof(TestClass), "PropertyName")] = "SpecificOverride";
+            options.PropertyOverrides[new(typeof(TestClass), "PropertyName")] = "SpecificOverride";
 
             var result = options.GetXmlName(typeof(TestClass), "PropertyName");
 

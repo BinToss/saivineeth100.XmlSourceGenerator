@@ -15,7 +15,7 @@ namespace XmlSourceGenerator.Tests.Integration
         public void TestPropertyOverride()
         {
             var options = new XmlSerializationOptions();
-            options.PropertyOverrides[(typeof(Product), "ProductName")] = "FullProductName";
+            options.PropertyOverrides[new(typeof(Product), "ProductName")] = "FullProductName";
 
             var xml = new XElement("Product",
                 new XElement("ProductId", 1),

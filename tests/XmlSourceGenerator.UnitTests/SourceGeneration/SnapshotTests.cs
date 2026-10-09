@@ -32,6 +32,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -42,6 +43,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.SimpleModel);
             public const string PropName_Name = nameof(Test.SimpleModel.Name);
             public const string DefaultXmlName_Name = ""Name"";
@@ -49,7 +51,7 @@ namespace Test
 
         public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
-            var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
+            var xmlName_Name = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name)) ?? XmlTypeInfo.DefaultXmlName_Name;
             var elem_Name = element.Element(xmlName_Name);
             if (elem_Name != null)
             {
@@ -65,7 +67,7 @@ namespace Test
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
             var element = new XElement(DefaultXmlRootElementName);
-            var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
+            var xmlName_Name = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name)) ?? XmlTypeInfo.DefaultXmlName_Name;
             if (Name != null)
             {
                 element.Add(new XElement(xmlName_Name, Name));
@@ -109,6 +111,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -119,6 +122,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Product);
             public const string PropName_Name = nameof(Test.Product.Name);
             public const string DefaultXmlName_Name = ""Name"";
@@ -130,7 +134,7 @@ namespace Test
             if (options != null && options.PreferOptionsOverAttributes)
             {
                 var override_Name = options.GetOverride(typeof(Product), ""Name"");
-                if (!string.IsNullOrEmpty(override_Name)) xmlName_Name = override_Name;
+                if (!string.IsNullOrEmpty(override_Name)) xmlName_Name = override_Name!;
             }
             var elem_Name = element.Element(xmlName_Name);
             if (elem_Name != null)
@@ -151,7 +155,7 @@ namespace Test
             if (options != null && options.PreferOptionsOverAttributes)
             {
                 var override_Name = options.GetOverride(typeof(Product), ""Name"");
-                if (!string.IsNullOrEmpty(override_Name)) xmlName_Name = override_Name;
+                if (!string.IsNullOrEmpty(override_Name)) xmlName_Name = override_Name!;
             }
             if (Name != null)
             {
@@ -196,6 +200,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -206,6 +211,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Product);
             public const string PropName_Id = nameof(Test.Product.Id);
             public const string DefaultXmlName_Id = ""Id"";
@@ -268,6 +274,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -278,6 +285,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Order);
             public const string PropName_Items = nameof(Test.Order.Items);
             public const string DefaultXmlName_Items = ""Items"";
@@ -357,6 +365,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -367,6 +376,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Person);
             public const string PropName_FirstName = nameof(Test.Person.FirstName);
             public const string DefaultXmlName_FirstName = ""FirstName"";
@@ -380,25 +390,25 @@ namespace Test
 
         public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
-            var xmlName_FirstName = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_FirstName) ?? XmlTypeInfo.DefaultXmlName_FirstName;
+            var xmlName_FirstName = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_FirstName)) ?? XmlTypeInfo.DefaultXmlName_FirstName;
             var elem_FirstName = element.Element(xmlName_FirstName);
             if (elem_FirstName != null)
             {
                 FirstName = elem_FirstName.Value;
             }
-            var xmlName_LastName = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_LastName) ?? XmlTypeInfo.DefaultXmlName_LastName;
+            var xmlName_LastName = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_LastName)) ?? XmlTypeInfo.DefaultXmlName_LastName;
             var elem_LastName = element.Element(xmlName_LastName);
             if (elem_LastName != null)
             {
                 LastName = elem_LastName.Value;
             }
-            var xmlName_Age = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Age) ?? XmlTypeInfo.DefaultXmlName_Age;
+            var xmlName_Age = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Age)) ?? XmlTypeInfo.DefaultXmlName_Age;
             var elem_Age = element.Element(xmlName_Age);
             if (elem_Age != null)
             {
                 Age = (int)elem_Age;
             }
-            var xmlName_BirthDate = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_BirthDate) ?? XmlTypeInfo.DefaultXmlName_BirthDate;
+            var xmlName_BirthDate = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_BirthDate)) ?? XmlTypeInfo.DefaultXmlName_BirthDate;
             var elem_BirthDate = element.Element(xmlName_BirthDate);
             if (elem_BirthDate != null)
             {
@@ -414,19 +424,19 @@ namespace Test
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
             var element = new XElement(DefaultXmlRootElementName);
-            var xmlName_FirstName = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_FirstName) ?? XmlTypeInfo.DefaultXmlName_FirstName;
+            var xmlName_FirstName = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_FirstName)) ?? XmlTypeInfo.DefaultXmlName_FirstName;
             if (FirstName != null)
             {
                 element.Add(new XElement(xmlName_FirstName, FirstName));
             }
-            var xmlName_LastName = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_LastName) ?? XmlTypeInfo.DefaultXmlName_LastName;
+            var xmlName_LastName = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_LastName)) ?? XmlTypeInfo.DefaultXmlName_LastName;
             if (LastName != null)
             {
                 element.Add(new XElement(xmlName_LastName, LastName));
             }
-            var xmlName_Age = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Age) ?? XmlTypeInfo.DefaultXmlName_Age;
+            var xmlName_Age = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Age)) ?? XmlTypeInfo.DefaultXmlName_Age;
             element.Add(new XElement(xmlName_Age, Age));
-            var xmlName_BirthDate = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_BirthDate) ?? XmlTypeInfo.DefaultXmlName_BirthDate;
+            var xmlName_BirthDate = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_BirthDate)) ?? XmlTypeInfo.DefaultXmlName_BirthDate;
             element.Add(new XElement(xmlName_BirthDate, BirthDate));
             return element;
         }
@@ -469,6 +479,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -479,6 +490,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Product);
             public const string PropName_Name = nameof(Test.Product.Name);
             public const string DefaultXmlName_Name = ""Name"";
@@ -488,7 +500,7 @@ namespace Test
 
         public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
-            var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
+            var xmlName_Name = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name)) ?? XmlTypeInfo.DefaultXmlName_Name;
             var elem_Name = element.Element(xmlName_Name);
             if (elem_Name != null)
             {
@@ -504,7 +516,7 @@ namespace Test
         public  XElement WriteToXml(XmlSerializationOptions? options = null)
         {
             var element = new XElement(DefaultXmlRootElementName);
-            var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
+            var xmlName_Name = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name)) ?? XmlTypeInfo.DefaultXmlName_Name;
             if (Name != null)
             {
                 element.Add(new XElement(xmlName_Name, Name));
@@ -558,6 +570,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -568,6 +581,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Voucher);
             public const string PropName_LedgerEntries = nameof(Test.Voucher.LedgerEntries);
             public const string DefaultXmlName_LedgerEntries = ""LedgerEntries"";
@@ -681,6 +695,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -691,6 +706,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Voucher);
             public const string PropName_Id = nameof(Test.Voucher.Id);
             public const string DefaultXmlName_Id = ""Id"";
@@ -789,6 +805,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -801,6 +818,7 @@ namespace Test
         {
             private static class XmlTypeInfo
             {
+                [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
                 public static readonly Type Type = typeof(Test.Parent.NestedChild);
                 public const string PropName_Name = nameof(Test.Parent.NestedChild.Name);
                 public const string DefaultXmlName_Name = ""Name"";
@@ -808,7 +826,7 @@ namespace Test
 
             public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
             {
-                var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
+                var xmlName_Name = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name)) ?? XmlTypeInfo.DefaultXmlName_Name;
                 var elem_Name = element.Element(xmlName_Name);
                 if (elem_Name != null)
                 {
@@ -824,7 +842,7 @@ namespace Test
             public  XElement WriteToXml(XmlSerializationOptions? options = null)
             {
                 var element = new XElement(DefaultXmlRootElementName);
-                var xmlName_Name = options?.GetXmlName(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name) ?? XmlTypeInfo.DefaultXmlName_Name;
+                var xmlName_Name = options?.GetXmlName(new PolymorphicMapping(XmlTypeInfo.Type, XmlTypeInfo.PropName_Name)) ?? XmlTypeInfo.DefaultXmlName_Name;
                 if (Name != null)
                 {
                     element.Add(new XElement(xmlName_Name, Name));
@@ -879,6 +897,7 @@ namespace Test
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using System.Globalization;
 using XmlSourceGenerator.Abstractions;
@@ -889,6 +908,7 @@ namespace Test
     {
         private static class XmlTypeInfo
         {
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
             public static readonly Type Type = typeof(Test.Envelope);
             public const string PropName_Version = nameof(Test.Envelope.Version);
             public const string DefaultXmlName_Version = ""Version"";
@@ -922,7 +942,7 @@ namespace Test
             if (options != null && options.PreferOptionsOverAttributes)
             {
                 var override_Header = options.GetOverride(typeof(Envelope), ""Header"");
-                if (!string.IsNullOrEmpty(override_Header)) xmlName_Header = override_Header;
+                if (!string.IsNullOrEmpty(override_Header)) xmlName_Header = override_Header!;
             }
             var elem_Header = element.Element(xmlName_Header);
             if (elem_Header != null)
@@ -944,7 +964,7 @@ namespace Test
             if (options != null && options.PreferOptionsOverAttributes)
             {
                 var override_Header = options.GetOverride(typeof(Envelope), ""Header"");
-                if (!string.IsNullOrEmpty(override_Header)) xmlName_Header = override_Header;
+                if (!string.IsNullOrEmpty(override_Header)) xmlName_Header = override_Header!;
             }
             if (Header != null)
             {

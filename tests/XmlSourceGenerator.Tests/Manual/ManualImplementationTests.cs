@@ -15,8 +15,8 @@ namespace XmlSourceGenerator.Tests.Integration
 
         public void ReadFromXml(XElement element, XmlSerializationOptions? options = null)
         {
-            var userIdName = options?.GetXmlName(typeof(ManualUser), nameof(UserId)) ?? nameof(UserId);
-            var usernameName = options?.GetXmlName(typeof(ManualUser), nameof(Username)) ?? nameof(Username);
+            var userIdName = options?.GetXmlName(new(typeof(ManualUser), nameof(UserId))) ?? nameof(UserId);
+            var usernameName = options?.GetXmlName(new(typeof(ManualUser), nameof(Username))) ?? nameof(Username);
 
             UserId = (int)(element.Element(userIdName) ?? throw new NullReferenceException($"XML Element with name \"{userIdName}\" cannot be found!"));
             Username = (string)(element.Element(usernameName) ?? throw new NullReferenceException($"XML Element with name \"{Username}\" cannot be found!"));
@@ -24,8 +24,8 @@ namespace XmlSourceGenerator.Tests.Integration
 
         public XElement WriteToXml(XmlSerializationOptions? options = null)
         {
-            var userIdName = options?.GetXmlName(typeof(ManualUser), nameof(UserId)) ?? nameof(UserId);
-            var usernameName = options?.GetXmlName(typeof(ManualUser), nameof(Username)) ?? nameof(Username);
+            var userIdName = options?.GetXmlName(new(typeof(ManualUser), nameof(UserId))) ?? nameof(UserId);
+            var usernameName = options?.GetXmlName(new(typeof(ManualUser), nameof(Username))) ?? nameof(Username);
 
             return new XElement(nameof(ManualUser),
                 new XElement(userIdName, UserId),
@@ -52,7 +52,7 @@ namespace XmlSourceGenerator.Tests.Integration
         public void TestManualImplementation_WithOptions()
         {
             var options = new XmlSerializationOptions();
-            options.PropertyOverrides[(typeof(ManualUser), "Username")] = "UserName";
+            options.PropertyOverrides[new(typeof(ManualUser), "Username")] = "UserName";
 
             var xml = new XElement(nameof(ManualUser),
                 new XElement(nameof(ManualUser.UserId), 100),

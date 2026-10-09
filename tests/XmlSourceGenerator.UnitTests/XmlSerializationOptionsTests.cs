@@ -11,7 +11,7 @@ public class XmlSerializationOptionsTests
         var type = typeof(string); // Dummy type
         var propName = "TestProp";
 
-        options.PropertySettings.Add((type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
+        options.PropertySettings.Add(new(type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
 
         var result = options.GetOverride(type, propName);
 
@@ -41,7 +41,7 @@ public class XmlSerializationOptionsTests
         var propName = "TestProp";
         // var defaultName = "DefaultName";
 
-        options.PropertySettings.Add((type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
+        options.PropertySettings.Add(new(type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
 
         //var result = options.GetXmlName(type, propName, defaultName);
 
@@ -59,7 +59,7 @@ public class XmlSerializationOptionsTests
         var propName = "TestProp";
         // var defaultName = "DefaultName";
 
-        options.PropertySettings.Add((type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
+        options.PropertySettings.Add(new(type, propName), new XmlPropertySettings { XmlName = "OverriddenName" });
 
         // Note: GetXmlName logic might still return override if it's designed to always check overrides
         // but the generator decides whether to call it based on PreferOptionsOverAttributes.
@@ -90,13 +90,13 @@ public class XmlSerializationOptionsTests
         var type = typeof(string);
         var propName = "TestProp";
 
-        var mappings = new List<XmlPropertySettings.PolymorphicMapping>
+        var mappings = new List<PolymorphicMapping>
         {
-            (typeof(int), "IntVal"),
-            (typeof(bool), "BoolVal")
+            new(typeof(int), "IntVal"),
+            new(typeof(bool), "BoolVal")
         };
 
-        options.PropertySettings.Add((type, propName), new XmlPropertySettings { PolymorphicMappings = mappings });
+        options.PropertySettings.Add(new(type, propName), new XmlPropertySettings { PolymorphicMappings = mappings });
 
         var result = options.GetPolymorphicMappings(type, propName);
 
