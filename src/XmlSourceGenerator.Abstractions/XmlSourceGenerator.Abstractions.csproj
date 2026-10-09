@@ -14,6 +14,7 @@
       T:System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes
     </MeziantouPolyfill_IncludedPolyfills>
     <MeziantouPolyfill_IncludedPolyfills>$([System.Text.RegularExpressions.Regex]::Replace($(MeziantouPolyfill_IncludedPolyfills), "\n", ""))</MeziantouPolyfill_IncludedPolyfills>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
