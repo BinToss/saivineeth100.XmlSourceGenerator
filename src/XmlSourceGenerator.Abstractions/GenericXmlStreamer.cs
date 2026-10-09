@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -219,7 +220,7 @@ namespace XmlSourceGenerator.Abstractions
         /// <param name="rootName"></param>
         /// <param name="itemName"></param>
         /// <returns></returns>
-        public static async Task WriteEnumerableDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)
+        public static async Task WriteEnumerableDataToStreamAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null) where T : new()
         {
             string targetItemName = GetRootName<T>(itemName);
 
@@ -380,7 +381,7 @@ namespace XmlSourceGenerator.Abstractions
             }
             return el;
         }
-        private static string GetRootName<T>(string? itemName)
+        private static string GetRootName<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T >(string? itemName) where T : new()
         {
             if (!string.IsNullOrEmpty(itemName)) return itemName!;
 
