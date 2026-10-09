@@ -63,6 +63,25 @@ namespace XmlSourceGenerator.Abstractions
             return item;
         }
 
+        /// <summary>Deserialize via boxed-<see cref="Type"/> instead of generic parameter</summary>
+        /// <returns>
+        ///   <see langword="null"/> when <paramref name="element"/> is null -OR- <paramref name="type"/> lacks a public, parameterless constructor<br/>
+        /// </returns>
+        internal static object? Deserialize(
+            XElement? element,
+            XmlSerializationOptions? options,
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+            Type type
+        )
+        {
+            if (element == null) return default;
+#pragma warning disable IL2070 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The parameter of method does not have matching annotations.
+            var item = type.GetConstructor([])?.Invoke(null);
+#pragma warning restore IL2070 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The parameter of method does not have matching annotations.
+            Populate(item, element, options);
+            return item;
+        }
+
         public static void Populate(object? item, XElement? element, XmlSerializationOptions? options)
         {
             if (item == null || element == null) return;
@@ -97,12 +116,11 @@ namespace XmlSourceGenerator.Abstractions
                         // var val2 = ReflectionHelper.Deserialize<dynamic>(childEl, options);
                         // prop.Property.SetValue(item, val2);
 
-                        // Recursive deserialization
+                        // Recursive deserialization<br/>
                         // For nested properties, we normally create new instances.
-                        // We use Deserialize<T> via reflection because we need to know the type to create.
-                        var method = typeof(ReflectionHelper).GetMethod(nameof(Deserialize), BindingFlags.Public | BindingFlags.Static)!
-                                        .MakeGenericMethod(prop.PropertyType);
-                        var val = method.Invoke(null, new object?[] { childEl, options });
+#pragma warning disable IL2072 // Target parameter argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
+                        var val = Deserialize(childEl, options, prop.PropertyType);
+#pragma warning restore IL2072 // Target parameter argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
                         prop.Property.SetValue(item, val);
                     }
                 }
@@ -159,7 +177,9 @@ namespace XmlSourceGenerator.Abstractions
             // Dynamic parse for DateOnly/TimeOnly
             if (type.Name == "DateOnly" || type.Name == "TimeOnly")
             {
+#pragma warning disable IL2070 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The parameter of method does not have matching annotations.
                 var parseMethod = type.GetMethod("Parse", new[] { typeof(string) });
+#pragma warning restore IL2070 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The parameter of method does not have matching annotations.
                 if (parseMethod != null) return parseMethod.Invoke(null, new object[] { value });
             }
 
@@ -185,14 +205,18 @@ namespace XmlSourceGenerator.Abstractions
                 var rootAttr = type.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().Name == nameof(XmlRootAttribute));
                 if (rootAttr != null)
                 {
+#pragma warning disable IL2075 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
                     var nameProp = rootAttr.GetType().GetProperty("ElementName");
+#pragma warning restore IL2075 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
                     var val = nameProp?.GetValue(rootAttr) as string;
                     if (!string.IsNullOrEmpty(val)) RootName = val!;
                 }
 
+#pragma warning disable IL2070 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The parameter of method does not have matching annotations.
                 Properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                     .Select(p => new XmlPropertyMetadata(p))
                     .ToList();
+#pragma warning restore IL2070 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The parameter of method does not have matching annotations.
             }
         }
 
@@ -224,13 +248,17 @@ namespace XmlSourceGenerator.Abstractions
                     if (typeName == nameof(XmlAttributeAttribute))
                     {
                         IsAttribute = true;
+#pragma warning disable IL2075 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
                         var nameProp = attr.GetType().GetProperty(nameof(XmlAttributeAttribute.AttributeName));
+#pragma warning restore IL2075 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
                         var val = nameProp?.GetValue(attr) as string;
                         if (!string.IsNullOrEmpty(val)) XmlName = val!;
                     }
                     else if (typeName == nameof(XmlElementAttribute))
                     {
+#pragma warning disable IL2075 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
                         var nameProp = attr.GetType().GetProperty(nameof(XmlElementAttribute.ElementName));
+#pragma warning restore IL2075 // 'this' argument does not satisfy 'DynamicallyAccessedMembersAttribute' in call to target method. The return value of the source method does not have matching annotations.
                         var val = nameProp?.GetValue(attr) as string;
                         if (!string.IsNullOrEmpty(val)) XmlName = val!;
                     }
