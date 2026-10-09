@@ -16,7 +16,12 @@ if ($PSVersionTable.Platform -eq 'Win32NT') {
 
 $DOTNET_INSTALL_DIR = "$env:LocalAppData\Microsoft\dotnet"
 $isUnixLike = $PSVersionTable.Platform -eq 'Unix';
-if ($isUnixLike) { $DOTNET_INSTALL_DIR = "$env:HOME/.dotnet" }
+if ($isUnixLike) {
+  $DOTNET_INSTALL_DIR = "$env:HOME/.dotnet"
+  if (Test-Path "$env:DOTNET_INSTALL") {
+    $DOTNET_INSTALL_DIR = $env:DOTNET_INSTALL
+  }
+}
 
 [System.Environment]::SetEnvironmentVariable('DOTNET_INSTALL_DIR', "$DOTNET_INSTALL_DIR", [System.EnvironmentVariableTarget]::User);
 
@@ -49,9 +54,7 @@ $sdkVersion = & (Join-Path $installDir 'dotnet.exe') --version
     "paths": [".dotnet", "`$host`$"],
     "errorMessage": "Required .NET SDK not found. Run ./install-dotnet.sh (macOS/Linux) or ./install-dotnet.ps1 (Windows/Wine) to install it locally. '.dotnet' can be a symbolic link."
   },
-  "test": {
-    "runner": "Microsoft.Testing.Platform"
-  }
+  "test": { "runner": "Microsoft.Testing.Platform" }
 }
 "@ | Set-Content -Path (Join-Path $scriptDir 'global.json') -Encoding UTF8
 

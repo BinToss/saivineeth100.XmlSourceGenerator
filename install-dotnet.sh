@@ -27,8 +27,12 @@ bsd*) isUnixLike=true ;;
 esac
 
 if [ $isUnixLike ]; then
-	DOTNET_INSTALL_DIR="$HOME/.dotnet"
-	echo 'DOTNET_INSTALL_DIR="$HOME/.dotnet"' >>$HOME/.config/environment.d/00-dotnet.conf || true
+	if [ -d "$DOTNET_INSTALL" ];then
+		DOTNET_INSTALL_DIR="$DOTNET_INSTALL"
+	else
+		DOTNET_INSTALL_DIR="$HOME/.dotnet"
+		echo 'DOTNET_INSTALL_DIR="$HOME/.dotnet"' >>$HOME/.config/environment.d/00-dotnet.conf || true
+	fi;
 else
 	reg.exe add HKCU\\Environment /v DOTNET_INSTALL_DIR /t REG_SZ /d "$DOTNET_INSTALL_DIR"
 	INSTALL_DIR="$SCRIPT_DIR/.dotnet-win"
@@ -63,9 +67,7 @@ cat >"$SCRIPT_DIR/global.json" <<EOF
     "paths": [".dotnet", "\$host\$"],
     "errorMessage": "Required .NET SDK not found. Run ./install-dotnet.sh (macOS/Linux) or ./install-dotnet.ps1 (Windows/Wine) to install it locally. '.dotnet' can be a symbolic link."
   },
-  "test": {
-    "runner": "Microsoft.Testing.Platform"
-  }
+  "test": { "runner": "Microsoft.Testing.Platform" }
 }
 EOF
 
