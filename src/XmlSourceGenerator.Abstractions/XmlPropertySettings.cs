@@ -25,5 +25,10 @@ namespace XmlSourceGenerator.Abstractions
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
         Type Type,
         string Name
-    );
+    )
+    {
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+        public Type Type { get; } = Type;
+        public string Name { get; } = Name;
+    };
 }
