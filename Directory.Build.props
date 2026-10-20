@@ -4,7 +4,7 @@
     <!-- Package Metadata -->
     <Authors>Saivineeth;Noah Sherwin;</Authors>
     <Company>Saivineeth</Company>
-    <Product>XmlSourceGenerator</Product>
+    <Product>BinToss.XmlSourceGenerator</Product>
     <Description>Fork of Saivineeth's XmlSourceGenerator. High-performance XML serialization via source generation with XmlSerializer feature parity</Description>
     <Copyright>Copyright © $(Authors) 2026</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
