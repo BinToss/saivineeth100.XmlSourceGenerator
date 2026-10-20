@@ -67,5 +67,8 @@ jobs:
       - name: Pack (Release)
         run: dotnet pack
 
-      - name: Publish (Release)
-        run: dotnet restore src -t:PublishAll
+      - name: Publish XmlSourceGenerator.Abstractions (Release)
+        run: dotnet restore src/XmlSourceGenerator.Abstractions -t:PublishAll
+
+      - name: Publish XmlSourceGenerator (Release)
+        run: dotnet restore src/XmlSourceGenerator -t:PublishAll
