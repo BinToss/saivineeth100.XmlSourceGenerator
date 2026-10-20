@@ -5,7 +5,7 @@
     <Authors>Saivineeth;Noah Sherwin;</Authors>
     <Company>Saivineeth</Company>
     <Product>XmlSourceGenerator</Product>
-    <Description>High-performance XML serialization via source generation with XmlSerializer feature parity</Description>
+    <Description>Fork of Saivineeth's XmlSourceGenerator. High-performance XML serialization via source generation with XmlSerializer feature parity</Description>
     <Copyright>Copyright © $(Authors) 2026</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/BinToss/saivineeth100.XmlSourceGenerator</PackageProjectUrl>
