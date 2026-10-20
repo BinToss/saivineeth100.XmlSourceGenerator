@@ -46,7 +46,7 @@
 
   <Target Name="IncludeAbstractionsInPackage">
     <ItemGroup>
-      <BuildOutputInPackage Include="$(ArtifactsPath)/bin/XmlSourceGenerator/$(Configuration.ToLowerInvariant())/XmlSourceGenerator.Abstractions.dll" />
+      <BuildOutputInPackage Include="$([System.IO.Path]::Combine('$(ArtifactsPath)', bin, XmlSourceGenerator, '$(Configuration.ToLowerInvariant())', 'XmlSourceGenerator.Abstractions.dll'))" />
     </ItemGroup>
   </Target>
 
