@@ -5,7 +5,10 @@ import type { PluginSpecSRCommitAnalyzer, PluginSpecSRReleaseNotesGen } from '@h
 import type { RuleObjects } from '@semantic-release/commit-analyzer';
 import { exit } from 'node:process';
 
-const projectsToPublish = ['./src/XmlSourceGenerator/XmlSourceGenerator.csproj'];
+const projectsToPublish = [
+  './src/XmlSourceGenerator/XmlSourceGenerator.csproj',
+  './src/XmlSourceGenerator.Abstractions/XmlSourceGenerator.Abstractions.csproj',
+];
 const projectsToPackAndPush = projectsToPublish;
 
 async function tryGetConfig(projectsToPublish: Parameters<typeof getConfig>[0], projectsToPackAndPush: Parameters<typeof getConfig>[1]) {
