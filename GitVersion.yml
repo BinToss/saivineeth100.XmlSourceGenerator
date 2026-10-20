@@ -33,10 +33,10 @@ branches:
     increment: None
     prevent-increment:
       when-current-commit-tagged: true
-    regex: 'bintoss/develop'
+    regex: 'bintoss\/develop'
   main:
     increment: None
-    regex: 'bintoss/main'
+    regex: 'bintoss\/main'
   release:
     increment: None
     prevent-increment:

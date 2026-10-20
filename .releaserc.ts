@@ -34,10 +34,18 @@ else {
   config.branches ??= [];
   if (typeof config.branches === 'string' || !('find' in config.branches))
     config.branches = [config.branches];
+
+  const mainBranch = config.branches.find(branch =>
+    typeof branch != 'string' && branch.name == 'main',
+  ) as Exclude<typeof config.branches[number], string>;
+  mainBranch.name = 'bintoss/main';
+
   const developmentBranch = config.branches.find(branch =>
     typeof branch !== 'string' && branch.name === 'develop',
   ) as Exclude<typeof config.branches[number], string>;
   developmentBranch.prerelease = 'alpha';
+  developmentBranch.name = 'bintoss/develop';
+
   const sRCA = config.plugins?.find<PluginSpecSRCommitAnalyzer>(
     (p): p is PluginSpecSRCommitAnalyzer => p[0] === '@semantic-release/commit-analyzer',
   );
