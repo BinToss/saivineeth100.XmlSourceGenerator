@@ -39,21 +39,13 @@ else {
     if (typeof config.branches === 'string' || !('find' in config.branches))
       config.branches = [config.branches];
 
-    // config.branches is a read-only array. So, we need to use a copy and overwrite the whole array
-    {
-      const copy = [...config.branches];
-      if (copy[0] === 'main') {
-        copy[0] = 'bintoss/main';
-      }
-      else {
-        const mainBranchString = copy[0] == undefined
-          ? 'null or undefined'
-          : JSON.stringify(copy[0]);
-        console.error('config.branches[0] is expected to be \'main\'; It is currently ' + mainBranchString);
-      }
-
-      config.branches = copy;
-    }
+    config.branches = [
+      {
+        name: 'bintoss/main',
+        channel: false,
+      },
+      ...config.branches,
+    ];
 
     const developmentBranch = config.branches.find(branch =>
       typeof branch !== 'string' && branch.name === 'develop',
