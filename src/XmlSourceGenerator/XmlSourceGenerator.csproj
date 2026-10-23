@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>XmlSourceGenerator</PackageId>
+    <PackageId>BinToss.XmlSourceGenerator</PackageId>
     <Description>High-performance XML serialization via source generation with XmlSerializer feature parity. Supports attributes, enums, collections, inheritance, and custom formatting.</Description>
     <PackageTags>$(PackageTags);analyzer;codegen</PackageTags>
 

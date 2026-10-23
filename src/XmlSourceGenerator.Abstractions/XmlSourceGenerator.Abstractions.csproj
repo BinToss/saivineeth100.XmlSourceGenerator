@@ -4,7 +4,7 @@
     <Product>BinToss.XmlSourceGenerator.Abstractions</Product>
     <!-- Multiple net4 targets because later runtimes include more assemblies and have different method overloads. -->
     <TargetFrameworks>netstandard2.0;net462;net47;net48;net5.0;net6.0;net7.0;net8.0;net9.0;net10.0</TargetFrameworks>
-    <PackageId>XmlSourceGenerator.Abstractions</PackageId>
+    <PackageId>BinToss.XmlSourceGenerator.Abstractions</PackageId>
     <Description>Runtime abstractions for XmlSourceGenerator - attributes, interfaces, and utilities for XML serialization</Description>
     <PackageTags>$(PackageTags);attributes;runtime</PackageTags>
     <!-- Can these polyfills cause type confusion during runtime? Will they implicit cast to another copy of the type? -->
