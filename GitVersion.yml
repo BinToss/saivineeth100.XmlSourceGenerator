@@ -36,7 +36,7 @@ branches:
     regex: 'bintoss\/develop'
   main:
     increment: None
-    regex: 'bintoss\/main'
+    regex: 'main'
   release:
     increment: None
     prevent-increment:
