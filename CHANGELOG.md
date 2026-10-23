@@ -1,11 +1,13 @@
-## 1.0.0-alpha.1 (2026-10-23)
+## 2.0.0-alpha.1 (2026-10-23)
 
 ### ⚠ BREAKING CHANGES
 
 * **Abstractions:** - All references to `(Type, string)` tuples have been changed to `PolymorphicMapping` for `DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)`, improving trim/AOT analysis. Previously, code analysis could fail if the warning was traced to XmlSerializationOptions.cs via ProjectReference.
+
 - Method definitions with a `Type`-type parameter will now warn with IL2077 if the argument is not annotated as public-parameterless constructor.
-- implicit conversions between `(Type,string)` and `PolymorphicMapping` have been removed because the public-parameterless-constructor annotations are lost in conversion.
-- record-class `XmlSourceGenerator.Abstractions.XmlPropertySettings.PolymorphicMapping` has been moved to `XmlSourceGenerator.Abstractions.PolymorphicMapping`
+* implicit conversions between `(Type,string)` and `PolymorphicMapping` have been removed because the public-parameterless-constructor annotations are lost in conversion.
+* record-class `XmlSourceGenerator.Abstractions.XmlPropertySettings.PolymorphicMapping` has been moved to `XmlSourceGenerator.Abstractions.PolymorphicMapping`
+
 * Overload `WriteDataToStreamAsync<T>(Stream stream, IEnumerable<T> items, XmlSerializationOptions? options = null, string rootName = "ArrayOfItems", string? itemName = null)` has been removed. Calls to `WriteDataToStreamAsync<T>(Stream stream, T item, XmlSerializationOptions? options = null, string? rootName = null, string? itemName = null)` where `T : IEnumerable` will throw an `ArgumentException` telling you to use `WriteEnumerableDataToStreamAsync`.
 
 ### Features
