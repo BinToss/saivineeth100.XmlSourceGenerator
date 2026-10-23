@@ -2,7 +2,7 @@ name: release
 
 on:
   push:
-    branches: [bintoss/main, bintoss/develop]
+    branches: ['main', bintoss/develop]
 
 env:
   DOTNET_ROLL_FORWARD: Major

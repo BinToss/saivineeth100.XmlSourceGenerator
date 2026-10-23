@@ -40,19 +40,12 @@ else {
       config.branches = [config.branches];
 
     config.branches = [
+      'main',
       {
-        name: 'bintoss/main',
-        channel: false,
+        name: 'bintoss/develop',
+        prerelease: 'alpha',
       },
-      ...config.branches,
     ];
-
-    const developmentBranch = config.branches.find(branch =>
-      typeof branch !== 'string' && branch.name === 'develop',
-    ) as Exclude<typeof config.branches[number], string>;
-    developmentBranch.prerelease = 'alpha';
-    developmentBranch.name = 'bintoss/develop';
-
     const sRCA = config.plugins?.find<PluginSpecSRCommitAnalyzer>(
       (p): p is PluginSpecSRCommitAnalyzer => p[0] === '@semantic-release/commit-analyzer',
     );
