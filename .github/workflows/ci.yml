@@ -5,8 +5,8 @@ on:
     # ignore release branches; See file://./release.yml#on.push.branches , file://./../../.releaserc.ts
     branches-ignore: [main, develop, bintoss/develop]
     paths-ignore:
-      - "**/*.md"
-      - "**/*.txt"
+      - '**/*.md'
+      - '**/*.txt'
   workflow_call:
 
 env:
@@ -66,6 +66,9 @@ jobs:
 
       - name: Pack (Release)
         run: dotnet pack
+
+      - name: Test
+        run: dotnet test
 
       - name: Publish XmlSourceGenerator.Abstractions (Release)
         run: dotnet restore src/XmlSourceGenerator.Abstractions -t:PublishAll
