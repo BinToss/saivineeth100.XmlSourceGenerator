@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
     <PackageId>BinToss.XmlSourceGenerator</PackageId>
     <Description>High-performance XML serialization via source generation with XmlSerializer feature parity. Supports attributes, enums, collections, inheritance, and custom formatting.</Description>
     <PackageTags>$(PackageTags);analyzer;codegen</PackageTags>
@@ -14,7 +13,6 @@
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <!-- <DevelopmentDependency>true</DevelopmentDependency> -->
 
-    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
