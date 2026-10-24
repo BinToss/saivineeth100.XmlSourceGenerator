@@ -1,3 +1,14 @@
+## [2.0.1](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/compare/v2.0.0...v2.0.1) (2026-10-24)
+
+### Bug Fixes
+
+* **deps:** ship net8.0, net10.0 XmlSourceGenerator.dll for `IsAotCompatible` annotation ([23dc5e4](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/23dc5e49fe87f25b89509922b890dbb793178dca))
+* **deps:** upgrade all dependencies ([cea5b83](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/cea5b8325c1efbc89a0123d761e1850e78e22a9d))
+
+### Reverts
+
+* cannot ship an analyzer for anything other than .NET Standard ([45fa41b](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/commit/45fa41b3645e3c9329150303adfa5e0214b18ba4))
+
 ## [2.0.0](https://github.com/BinToss/saivineeth100.XmlSourceGenerator/compare/v1.0.0...v2.0.0) (2026-10-23)
 
 ### ⚠ BREAKING CHANGES
