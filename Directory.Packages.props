@@ -6,11 +6,11 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Source Generator Dependencies -->
-    <PackageVersion Include="Meziantou.Polyfill" Version="1.0.164" />
+    <PackageVersion Include="Meziantou.Polyfill" Version="1.0.168" />
     <PackageVersion Condition="$(TargetFramework) == 'net462'"
                     Include="System.ValueTuple" Version="4.6.2"  />
     <PackageVersion Condition="$(NeedsSystemTextJsonPackage)"
-                    Include="System.Text.Json" Version="10.0.11" /> <!-- JsonIgnoreAttribute -->
+                    Include="System.Text.Json" Version="10.0.13" /> <!-- JsonIgnoreAttribute -->
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.9.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0" />
@@ -18,15 +18,21 @@
     <!-- Build Tools -->
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing" Version="1.1.4" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing" Version="1.1.4" />
-    <PackageVersion Include="MinVer" Version="7.0.0" />
+    <PackageVersion Include="MinVer" Version="8.0.0" />
     <!-- Testing -->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageVersion Include="NuGet.Common" Version="7.9.0" />
+    <PackageVersion Include="NuGet.Packaging" Version="7.9.0" />
+    <PackageVersion Include="NuGet.Protocol" Version="7.9.0" />
+    <PackageVersion Include="NuGet.Resolve" Version="7.9.0" />
     <PackageVersion Include="GitVersion.MsBuild" Version="6.8.2" />
-    <PackageVersion Include="xunit.v3" Version="4.0.0" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
-    <PackageVersion Include="coverlet.collector" Version="10.0.1" />
-    <PackageVersion Include="FluentAssertions" Version="8.10.0" />
+    <PackageVersion Include="xunit.v3" Version="4.0.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
+    <PackageVersion Include="coverlet.collector" Version="10.1.0" />
+    <PackageVersion Include="FluentAssertions" Version="8.11.0" />
     <!-- Benchmarking -->
     <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
+
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
   </ItemGroup>
 </Project>
