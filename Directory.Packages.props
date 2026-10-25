@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Source Generator Dependencies -->
-    <PackageVersion Include="Meziantou.Polyfill" Version="1.0.168" />
+    <PackageVersion Include="Meziantou.Polyfill" Version="1.0.169" />
     <PackageVersion Condition="$(TargetFramework) == 'net462'"
                     Include="System.ValueTuple" Version="4.6.2"  />
     <PackageVersion Condition="$(NeedsSystemTextJsonPackage)"
