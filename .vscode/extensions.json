@@ -25,7 +25,6 @@
     "tintoy.msbuild-project-tools",
     "prateekmahendrakar.prettyxml",
     "tobias-sekan.solutionextension",
-    "wayou.vscode-todo-highlight",
     "xsyetopz.versionlens-redux",
     "fullstackspider.visual-nuget",
     "aliasadidev.nugetpackagemanagergui",
@@ -35,6 +34,7 @@
     "rogalmic.vscode-xml-complete",
     "dotjoshjohnson.xml",
     "arcanis.vscode-zipfs",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "jgclark.vscode-todo-highlight"
   ]
 }
